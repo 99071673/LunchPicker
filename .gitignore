@@ -414,3 +414,4 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/laravel,windows,node,git,visualstudiocode,phpstorm,jetbrains
 .idea/workspace.xml
+/.idea
