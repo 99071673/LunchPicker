@@ -7,13 +7,29 @@
         <div class="w-[1700px] p-4 flex flex-col gap-5">
 
             <div class="grid grid-cols-[1fr_2fr_1fr] gap-10">
-                <div class="bg-white border rounded shadow p-4 h-[650px] w-full">
+                <div class="bg-white border rounded-lg rounded shadow p-4 h-[650px] w-full">
 
                 </div>
-                <div class="bg-white border rounded shadow p-4 h-[650px] w-full">
+                <div class="bg-white border rounded-lg rounded shadow p-4 h-[650px] w-full">
+                    <div class="grid grid-flow-col grid-rows-3 gap-4 h-full ">
+                        <div class="">
+                            <p class="text-7xl font-bold flex justify-center">00: 12 : 54</p>
+                            <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
+
+                        </div>
+
+                        <div class="">
+
+                        </div>
+
+                        <div class="">
+
+                        </div>
+
+                    </div>
 
                 </div>
-                <div class="bg-white border rounded shadow p-4 h-[650px] w-full">
+                <div class="bg-white border rounded-lg rounded shadow p-4 h-[650px] w-full">
 
                 </div>
             </div>
