@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lunchpicker</title>
-    @vite('resources/css/app.css')
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    @stack('styles')
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen m-0 font-sans bg-gray-300 flex flex-col">
 
