@@ -6,6 +6,7 @@
     <title>Lunchpicker</title>
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <script src="//unpkg.com/alpinejs" defer></script>
     @stack('styles')
 </head>
 <body class="min-h-screen m-0 font-sans bg-gray-300 flex flex-col">
