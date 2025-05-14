@@ -2,14 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/bestellen', function () {
-    return view('bestelling');
-})->name('bestelling');
+Route::get('/bestellen/{location_id}', [OrderController::class, 'show'])->name('bestelling');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
