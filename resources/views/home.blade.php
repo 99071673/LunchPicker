@@ -22,7 +22,7 @@
                             <p class="text-5xl font-bold">Er wordt nu besteld bij:</p>
 
                             <div class="mt-4">
-                                <img src="{{ asset('storage/images/placeholder.png') }}" alt="Bestelling logo" class="w-auto h-[15rem] object-contain" />
+                                <img src="{{ asset('images/placeholder.png') }}" alt="Bestelling logo" class="w-auto h-[15rem] object-contain" />
                             </div>
 
                         </div>
