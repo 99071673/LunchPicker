@@ -15,6 +15,11 @@
                         </div>
 
                         <div class="row-span-6">
+                            <div class="bg-gray-300 rounded-lg shadow p-2 flex items-center justify-between mb-2 mt-2">
+                                <span class="text-2xl font-semibold">2<span class="text-sm align-bottom">x</span></span>
+                                <span class="text-2xl font-semibold ml-2">Patatje klein</span>
+                                <span class="text-2xl font-semibold ml-auto">€ 55.40,-</span>
+                            </div>
 
                         </div>
 
@@ -93,7 +98,29 @@
 
                 </div>
                 <div class="bg-white border rounded-lg rounded shadow p-4 h-[650px] w-full">
+                    <div class="grid grid-rows-8 h-full">
 
+                        <div class="row-span-1 border-b-4 border-black">
+                            <p class="text-4xl font-bold flex justify-center">Schulden</p>
+                        </div>
+
+                        <div class="row-span-7">
+                            <div class="flex justify-between items-center bg-gray-300 rounded-lg shadow-md p-2 mb-2 mt-2">
+                                <p class="text-2xl font-semibold text-gray-800">Milan Sebes</p>
+                                <div class="flex bg-cyan-900 rounded shadow-md text-sm text-center p-1 space-x-2">
+                                    <div class="text-white">
+                                        <p class="font-bold">Te ontvangen</p>
+                                        <p class="text-green-500 font-semibold">€ 55.40,-</p>
+                                    </div>
+                                    <div class="text-white">
+                                        <p class="font-bold">Te betalen</p>
+                                        <p class="text-red-500 font-semibold">€ 20.50,-</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
