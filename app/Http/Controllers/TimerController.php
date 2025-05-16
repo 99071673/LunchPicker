@@ -9,7 +9,7 @@ class TimerController extends Controller
     public function home()
     {
     
-        $deadline = Carbon::today()->setTime(16, 30); 
+        $deadline = Carbon::today()->setTime(14, 15); 
 
         return view('home', [
             'deadline' => $deadline->format('Y-m-d H:i:s'),
