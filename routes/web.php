@@ -13,6 +13,7 @@ Route::get('/home', function () {
 })->name('home.page');
 
 
+Route::get('/', [TimerController::class, 'home']);
 Route::get('/home', [TimerController::class, 'home']);
 
 
