@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -26,7 +25,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('locations', LocationController::class);
-
-Route::post('/vote', [VoteController::class, 'store'])->name('vote.store');
+Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
 
 require __DIR__.'/auth.php';

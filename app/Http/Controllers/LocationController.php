@@ -64,4 +64,7 @@ class LocationController extends Controller
     {
         //
     }
+    public function submit(Request $request){
+        dd($request->location);
+    }
 }
