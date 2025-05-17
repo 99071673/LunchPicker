@@ -12,9 +12,12 @@ Route::get('/home', function () {
     return view('home');
 })->name('home.page');
 
-
 Route::get('/', [TimerController::class, 'home']);
 Route::get('/home', [TimerController::class, 'home']);
+
+Route::get('/admin', function () {
+    return view('admin');
+})->name('admin.page');
 
 
 Route::view('dashboard', 'dashboard')
