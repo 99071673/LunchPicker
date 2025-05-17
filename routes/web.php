@@ -32,4 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/userprofile', function () {
+    return view('userprofile');
+})->name('userprofile');
+
+require __DIR__ . '/auth.php';
