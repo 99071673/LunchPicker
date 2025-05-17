@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\TimerController;
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
+Route::resource('locations', LocationController::class);
+Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
 
 Route::get('/userprofile', function () {
     return view('userprofile');
