@@ -17,7 +17,7 @@
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
     'cipher' => 'AES-256-CBC',
-    'key' => 'base64:quwsLi1I9eQnNEp/AtIjkGUYCFdolaRdR+9RbTiZMxs=',
+    'key' => 'base64:CKgJrzln2UQvq5312WwHimSpWLRDjBIse89O3nliVGg=',
     'previous_keys' => 
     array (
     ),
@@ -159,8 +159,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\framework/cache/data',
-        'lock_path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -215,7 +215,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\database\\database.sqlite',
+        'database' => 'C:\\Users\\YukiT\\LunchPicker\\database\\database.sqlite',
         'prefix' => '',
         'foreign_key_constraints' => true,
         'busy_timeout' => NULL,
@@ -333,7 +333,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\app/private',
+        'root' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\app/private',
         'serve' => true,
         'throw' => false,
         'report' => false,
@@ -341,7 +341,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\app/public',
+        'root' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -363,7 +363,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\public\\storage' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\app/public',
+      'C:\\Users\\YukiT\\LunchPicker\\public\\storage' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\app/public',
     ),
   ),
   'logging' => 
@@ -388,14 +388,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -460,7 +460,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -536,7 +536,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\YukiT\\LunchPicker\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -631,7 +631,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -758,14 +758,14 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\resources\\views',
+      0 => 'C:\\Users\\YukiT\\LunchPicker\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\YukiT\\LunchPicker\\storage\\framework\\views',
   ),
   'livewire' => 
   array (
     'class_namespace' => 'App\\Livewire',
-    'view_path' => 'C:\\Users\\YukiT\\OneDrive - Da Vinci College\\FASE 3\\Lunch Picker App\\LunchPicker\\resources\\views/livewire',
+    'view_path' => 'C:\\Users\\YukiT\\LunchPicker\\resources\\views/livewire',
     'layout' => 'components.layouts.app',
     'lazy_placeholder' => NULL,
     'temporary_file_upload' => 
