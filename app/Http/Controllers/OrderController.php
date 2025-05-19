@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Location;
+use App\Models\LunchItem;
 
 class OrderController extends Controller
 {
     public function show($location_id)
     {
-        $location = Location::findOrFail($location_id);  // Haal de locatie op
-        return view('order.show', compact('location'));  // Retourneer de juiste view
-    }
+        $location = Location::findOrFail($location_id);
+        $lunchItems = LunchItem::where('location_id', $location_id)->get();
 
+        return view('order.show', compact('location', 'lunchItems'));
+    }
 }

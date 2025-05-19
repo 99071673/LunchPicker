@@ -11,12 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Maak een test user aan
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    
         $this->call([
             LocationSeeder::class,
         ]);
