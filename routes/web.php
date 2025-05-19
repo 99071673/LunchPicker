@@ -13,8 +13,8 @@ Route::get('/home', function () {
 })->name('home.page');
 
 
-Route::get('/', [TimerController::class, 'home']);
-Route::get('/home', [TimerController::class, 'home']);
+Route::get('/', [TimerController::class, 'home'])->name('home');;
+Route::get('/home', [TimerController::class, 'home'])->name('home');
 
 
 Route::view('dashboard', 'dashboard')
