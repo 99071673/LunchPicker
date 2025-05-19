@@ -15,8 +15,8 @@
 
     <div class="grid grid-cols-2 gap-10">
         <div class="bg-white border rounded shadow p-4 h-[350px] flex flex-col justify-start items-center relative">
-            <p class="text-3xl font-semibold mt-5">Selecteer je lunch</p>
-
+            <p class="text-3xl font-semibold mt-1">Selecteer je lunch</p>
+            
             <form method="GET" action="{{ url()->current() }}" class="w-full mt-4">
                 <input 
                     type="text" 
@@ -27,33 +27,73 @@
                 >
             </form>
 
-            <ul class="w-full mt-4 px-4 max-h-[200px] overflow-y-auto">
+            <ul class="w-full mt-4 px-4 max-h-[240px] overflow-y-auto">
                 @foreach ($lunchItems as $item)
                     <li class="flex justify-between items-center py-2 border-b last:border-none">
                         <span>{{ $item->naam }}</span>
                         <div class="flex items-center gap-4">
                             <span>€{{ number_format($item->prijs, 2) }}</span>
-                            <button class="bg-teal-900 text-white py-1 px-3 rounded hover:bg-teal-800 transition">
-                                Toevoegen
-                            </button>
+                            <form method="POST" action="{{ route('order.add') }}">
+                                @csrf
+                                <input type="hidden" name="item_id" value="{{ $item->id }}">
+                                <button type="submit" class="bg-teal-900 text-white py-1 px-3 rounded hover:bg-teal-800 transition">
+                                    Toevoegen
+                                </button>
+                            </form>
                         </div>
                     </li>
                 @endforeach
             </ul>
 
             <a href="{{ route('lunchitems.create', ['location_id' => $location->id]) }}"
-               class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all absolute bottom-4 right-4">
+               class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all mt-4 self-end">
                 Voeg nieuw item toe
             </a>
         </div>
+
         <div class="bg-white border rounded shadow p-4 h-[350px] flex flex-col justify-start items-center relative">
-            <p class="text-3xl font-semibold mt-5 border-b-2 border-black w-[75%] text-center pb-2">Jouw huidige bestelling</p>
+            <p class="text-3xl font-semibold mt-1 border-b-2 border-black w-[75%] text-center pb-2">Jouw huidige bestelling</p>
 
-            <button class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all absolute bottom-4 right-4">
+            @php
+                $order = session('order', []);
+            @endphp
+
+            <ul class="w-full mt-4 px-4 max-h-[200px] overflow-y-auto">
+                @forelse ($order as $key => $item)
+                    <li class="flex justify-between items-center py-2 border-b last:border-none">
+                        <div class="flex flex-col">
+                            <span>{{ $item['naam'] }}</span>
+                            <span class="text-sm text-gray-500">€{{ number_format($item['prijs'], 2) }}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            {{-- Aantal aanpassen, formulier verzendt automatisch bij wijziging --}}
+                            <form method="POST" action="{{ route('order.update') }}" class="flex items-center gap-2">
+                                @csrf
+                                <input type="hidden" name="key" value="{{ $key }}">
+                                <input type="number" name="aantal" min="1" value="{{ $item['aantal'] ?? 1 }}"
+                                       class="w-14 border rounded px-2 py-1 text-center text-sm"
+                                       onchange="this.form.submit()">
+                            </form>
+
+                            <form method="POST" action="{{ route('order.remove') }}">
+                                @csrf
+                                <input type="hidden" name="key" value="{{ $key }}">
+                                <button type="submit" class="text-red-600 hover:text-red-800 text-lg font-bold">
+                                    &times;
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                @empty
+                    <p class="mt-6 text-gray-500">Nog geen items toegevoegd.</p>
+                @endforelse
+            </ul>
+
+            <a href="{{ url('/') }}" 
+               class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all absolute bottom-4 right-4 inline-block text-center">
                 Rond bestelling af
-            </button>
+            </a>
         </div>
-
     </div>
 </div>
 @endsection
