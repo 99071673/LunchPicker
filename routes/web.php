@@ -12,6 +12,10 @@ Route::get('/home', function () {
     return view('home');
 })->name('home.page');
 
+Route::get('/userprofile', function () {
+    return view('userprofile');
+})->name('userprofile');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
