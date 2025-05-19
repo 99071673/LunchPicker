@@ -18,7 +18,7 @@
                         <label for="{{$location->id}}" class="location-btn w-full rounded-xl shadow p-4 flex flex-col items-center justify-center aspect-square
                            transition-colors duration-200 cursor-pointer focus:outline-none bg-white hover:bg-neutral-200 peer-checked:bg-gray-700 ">
                             <img
-                                src="{{ asset('images/' . $location->image) }}"
+                                src="{{ asset('storage/images/' . $location->image) }}"
                                 alt="{{ $location->name }}"
                                 class="max-h-40 object-contain mb-2">
 
