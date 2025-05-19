@@ -58,27 +58,35 @@
                 $order = session('order', []);
             @endphp
 
-            <ul class="w-full mt-4 px-4 max-h-[200px] overflow-y-auto">
+            <ul class="w-full mt-4 px-2 max-h-[200px] overflow-y-auto flex flex-col gap-2">
                 @forelse ($order as $key => $item)
-                    <li class="flex justify-between items-center py-2 border-b last:border-none">
+                    <li class="bg-gray-200 rounded-lg px-4 py-2 flex justify-between items-center">
                         <div class="flex flex-col">
-                            <span>{{ $item['naam'] }}</span>
-                            <span class="text-sm text-gray-500">€{{ number_format($item['prijs'], 2) }}</span>
+                            <span class="font-medium">{{ $item['naam'] }}</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            {{-- Aantal aanpassen, formulier verzendt automatisch bij wijziging --}}
-                            <form method="POST" action="{{ route('order.update') }}" class="flex items-center gap-2">
+
+                        <div class="flex items-center gap-4">
+                            <span class="text-base font-medium">
+                                €{{ number_format(($item['aantal'] ?? 1) * $item['prijs'], 2) }},-
+                            </span>
+
+                            <form method="POST" action="{{ route('order.update') }}" class="flex items-center">
                                 @csrf
                                 <input type="hidden" name="key" value="{{ $key }}">
-                                <input type="number" name="aantal" min="1" value="{{ $item['aantal'] ?? 1 }}"
-                                       class="w-14 border rounded px-2 py-1 text-center text-sm"
-                                       onchange="this.form.submit()">
+                                <input 
+                                    type="number" 
+                                    name="aantal" 
+                                    min="1" 
+                                    value="{{ $item['aantal'] ?? 1 }}" 
+                                    class="w-14 border rounded px-2 py-1 text-center text-sm"
+                                    onchange="this.form.submit()"
+                                >
                             </form>
 
                             <form method="POST" action="{{ route('order.remove') }}">
                                 @csrf
                                 <input type="hidden" name="key" value="{{ $key }}">
-                                <button type="submit" class="text-red-600 hover:text-red-800 text-lg font-bold">
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white w-8 h-8 rounded-full text-center text-xl leading-6 font-bold">
                                     &times;
                                 </button>
                             </form>
