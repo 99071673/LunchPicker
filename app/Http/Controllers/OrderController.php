@@ -8,10 +8,18 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function show($location_id)
+    public function show($location_id, Request $request)
     {
         $location = Location::findOrFail($location_id);
-        $lunchItems = LunchItem::where('location_id', $location_id)->get();
+
+        $query = LunchItem::where('location_id', $location_id);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('naam', 'LIKE', '%' . $search . '%');
+        }
+
+        $lunchItems = $query->get();
 
         return view('order.show', compact('location', 'lunchItems'));
     }
