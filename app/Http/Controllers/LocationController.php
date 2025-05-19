@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Location;
+use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
@@ -64,7 +66,18 @@ class LocationController extends Controller
     {
         //
     }
-    public function submit(Request $request){
-        dd($request->location);
+
+    public function submit(Request $request)
+    {
+
+
+        Vote::create([
+            "location_id" => $request->location,
+            "user_id" => Auth::user()->id,
+        ]);
+
+        return redirect()->route('home.page');
+
+
     }
 }
