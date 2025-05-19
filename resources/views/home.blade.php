@@ -48,7 +48,7 @@
                 <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full">
                     <div class="grid grid-rows-3 h-full">
                         <div class="border-b-4 border-black row-span-1 ">
-                            <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$deadline" id="home-timer" />
+                            <p class="text-7xl font-bold flex justify-center">00: 12 : 54</p>
                             <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
 
                         </div>
