@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lunch_items', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->string('naam');
             $table->decimal('prijs', 6, 2);
             $table->timestamps();
