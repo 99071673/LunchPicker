@@ -28,4 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__ . '/auth.php';
+Route::resource('locations', LocationController::class);
+Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
+
+require __DIR__.'/auth.php';
