@@ -1,0 +1,48 @@
+@extends('layouts.master')
+
+@section('pagetitle') Admin @endsection
+
+@section('content')
+    <div class="max-w-screen-xl w-full mx-auto p-4 flex flex-col gap-5">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-7 items-stretch">
+
+            <div class="flex flex-col justify-between h-[650px] w-full gap-6">
+                
+                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col">
+                    <div class="border-b-4 border-black mb-4">
+                        <p class="text-4xl font-bold flex justify-center">Deadlines</p>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                    </div>
+                </div>
+
+                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col">
+                    <div class="border-b-4 border-black mb-4">
+                        <p class="text-4xl font-bold flex justify-center">Gebruikers</p>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
+                <div class="border-b-4 border-black mb-4">
+                    <p class="text-4xl font-bold flex justify-center">Locaties</p>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
+                <div class="border-b-4 border-black mb-4">
+                    <p class="text-4xl font-bold flex justify-center">Overig</p>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endsection
