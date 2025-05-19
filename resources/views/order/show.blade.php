@@ -17,6 +17,16 @@
         <div class="bg-white border rounded shadow p-4 h-[350px] flex flex-col justify-start items-center relative">
             <p class="text-3xl font-semibold mt-5">Selecteer je lunch</p>
 
+            <form method="GET" action="{{ url()->current() }}" class="w-full mt-4">
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ request('search') }}" 
+                    placeholder="Zoek lunchitem..." 
+                    class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-900"
+                >
+            </form>
+
             <ul class="w-full mt-4 px-4 max-h-[200px] overflow-y-auto">
                 @foreach ($lunchItems as $item)
                     <li class="flex justify-between items-center py-2 border-b last:border-none">
