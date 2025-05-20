@@ -5,13 +5,7 @@ use App\Http\Controllers\LunchStatusController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-
-Route::get('/', [LunchStatusController::class, 'index']);
-
+Route::get('/', [LunchStatusController::class, 'index'])->name('home');
 
 Route::get('/home', function () {
     return view('home');
@@ -33,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
+// Locations
 Route::resource('locations', LocationController::class);
 Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
 
