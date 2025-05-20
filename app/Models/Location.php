@@ -2,14 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Location extends Model
 {
+    protected $fillable = [
+        'name',
+        'address',
+        'image',
+    ];
 
-    public function create(Location $location)
+    public function votes(): HasMany
     {
-        return view('lunchitems.create', compact('location'));
+        return $this->hasMany(Vote::class);
     }
-}
 
+
+    /** @use HasFactory<\Database\Factories\LocationFactory> */
+    use HasFactory;
+}
