@@ -8,9 +8,8 @@ class Location extends Model
 {
 
     public function create(Location $location)
-{
-    return view('lunchitems.create', compact('location'));
-}
-
+    {
+        return view('lunchitems.create', compact('location'));
+    }
 }
 
