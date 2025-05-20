@@ -51,7 +51,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session File Locations
+    | Session File Location
     |--------------------------------------------------------------------------
     |
     | When utilizing the "file" session driver, the session files are placed
