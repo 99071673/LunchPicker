@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\OrderController;
@@ -19,10 +18,6 @@ Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
 Route::post('/order/update', [OrderController::class, 'update'])->name('order.update');
 Route::post('/order/remove', [OrderController::class, 'remove'])->name('order.remove');
 
-Route::get('/userprofile', function () {
-    return view('userprofile');
-})->name('userprofile');
-
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -34,8 +29,5 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
-
-Route::resource('locations', LocationController::class);
-Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
 
 require __DIR__.'/auth.php';

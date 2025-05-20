@@ -2,9 +2,6 @@ Rename-Item -Path ".env.example" -NewName ".env"
 
 php artisan migrate
 
-npm install
-npm run build
-
 composer install
 composer update
 
