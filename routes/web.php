@@ -6,7 +6,6 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\TimerController;
 
 Route::get('/', [TimerController::class, 'home'])->name('home');;
-Route::get('/home', [TimerController::class, 'home'])->name('home');
 
 Route::get('/userprofile', function () {
     return view('userprofile');
