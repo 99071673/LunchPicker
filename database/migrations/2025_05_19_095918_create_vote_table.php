@@ -9,23 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('lunch_items', function (Blueprint $table) {
+        Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('location_id')->nullable();
-            $table->string('naam');
-            $table->decimal('prijs', 6, 2);
             $table->timestamps();
+            $table->foreignId('location_id')->references('id')->on('locations')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('lunch_items');
+        Schema::dropIfExists('votes');
     }
 };
