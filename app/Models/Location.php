@@ -18,7 +18,11 @@ class Location extends Model
     {
         return $this->hasMany(Vote::class);
     }
-
+    
+    public function create(Location $location)
+    {
+        return view('lunchitems.create', compact('location'));
+    }
 
     /** @use HasFactory<\Database\Factories\LocationFactory> */
     use HasFactory;
