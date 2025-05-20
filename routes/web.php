@@ -5,14 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\TimerController;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/home', function () {
-    return view('home');
-})->name('home.page');
-
 Route::get('/', [TimerController::class, 'home'])->name('home');;
 Route::get('/home', [TimerController::class, 'home'])->name('home');
 
