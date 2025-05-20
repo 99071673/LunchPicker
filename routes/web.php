@@ -3,6 +3,7 @@
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\TimerController;
 
 Route::get('/', function () {
     return view('home');
@@ -11,6 +12,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home.page');
+
+Route::get('/', [TimerController::class, 'home'])->name('home');;
+Route::get('/home', [TimerController::class, 'home'])->name('home');
 
 Route::get('/userprofile', function () {
     return view('userprofile');
