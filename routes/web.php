@@ -3,11 +3,11 @@
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use App\Http\Controllers\TimerController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LunchItemController;
 
-Route::get('/', [TimerController::class, 'home'])->name('home');;
+Route::get('/', [HomepageController::class, 'home'])->name('home');;
 
 Route::get('/userprofile', function () {
     return view('userprofile');
