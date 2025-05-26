@@ -112,10 +112,22 @@
                             </div>
 
                             <div class="w-80 flex-none flex  items-center justify-center pt-4  pb-4">
-                                <button
-                                    class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
-                                    Doe mee
-                                </button>
+                                @if($status === 'wachten')
+                                    <button
+                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                        Doe alvast mee
+                                    </button>
+                                @elseif($status === 'locatie-stemmen')
+                                    <button
+                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                        Kies Locatie
+                                    </button>
+                                @elseif($status === 'bestellen')
+                                    <button
+                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                        Bestel nu
+                                    </button>
+                                @endif
                             </div>
                         </div>
 
