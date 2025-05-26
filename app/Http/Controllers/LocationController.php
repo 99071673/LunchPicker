@@ -76,7 +76,7 @@ class LocationController extends Controller
             "user_id" => Auth::user()->id,
         ]);
 
-        return redirect()->route('home.page');
+        return redirect()->route('home');
 
 
     }
