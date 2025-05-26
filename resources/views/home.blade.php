@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
-@section('pagetitle') Home @endsection
+@section('pagetitle')
+    Home
+@endsection
 
 @section('content')
     <div>
@@ -47,18 +49,40 @@
                 </div>
                 <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full">
                     <div class="grid grid-rows-3 h-full">
-                        <div class="border-b-4 border-black row-span-1 ">
-                            <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$deadline" id="home-timer" />
-                            <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
+                        <div class="border-b-4 border-black row-span-1">
+                            <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$deadline"
+                                id="home-timer" />
 
+
+                            @if($status === 'wachten')
+                                <p class="text-5xl font-bold flex justify-center">Resterende tot volgende lunch</p>
+                            @elseif($status === 'locatie-stemmen')
+                                <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
+                            @elseif($status === 'bestellen')
+                                <p class="text-5xl font-bold flex justify-center">Resterende om te bestellen</p>
+                            @endif
                         </div>
 
                         <div class="row-span-2 pt-4 flex-col flex items-center">
-                            <p class="text-5xl font-bold">Er wordt nu besteld bij:</p>
+                            @if($status === 'wachten')
+
+                            @elseif($status === 'locatie-stemmen')
+                                <p class="text-5xl font-bold">Er wordt nu gestemd voor locatie:</p>
+                            @elseif($status === 'bestellen')
+                                <p class="text-5xl font-bold">Er wordt nu besteld bij:</p>
+                            @endif
 
                             <div class="mt-4">
-                                <img src="{{ asset('images/placeholder.png') }}" alt="Bestelling logo"
-                                    class="w-auto h-[15rem] object-contain" />
+                                @if($status === 'wachten')
+                                    <img src="{{ asset('images/wait-lunch.png') }}" alt="Wachten"
+                                        class="w-auto h-[15rem] object-contain" />
+                                @elseif($status === 'locatie-stemmen')
+                                    <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
+                                        class="w-auto h-[15rem] object-contain" />
+                                @elseif($status === 'bestellen')
+                                    <img src="{{ asset('images/placeholder.png') }}" alt="Bestellen"
+                                        class="w-auto h-[15rem] object-contain" />
+                                @endif
                             </div>
 
                         </div>
@@ -72,7 +96,7 @@
                                         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                 </svg>
 
-                                <p class="text-5xl font-semibold">5</p>
+                                <p class="text-5xl font-semibold"> @livewire('vote-counter') </p>
 
                             </div>
 
@@ -90,7 +114,8 @@
                             <div class="w-80 flex-none flex  items-center justify-center pt-4  pb-4">
                                 <button
                                     class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
-                                    Doe mee </button>
+                                    Doe mee
+                                </button>
                             </div>
                         </div>
 

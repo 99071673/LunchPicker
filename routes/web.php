@@ -3,13 +3,13 @@
 use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use App\Http\Controllers\TimerController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LunchItemController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserProfileController;
 
-Route::get('/', [TimerController::class, 'home'])->name('home');;
+Route::get('/', [HomepageController::class, 'home'])->name('home');;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/userprofile', [UserProfileController::class, 'index'])->name('userprofile');

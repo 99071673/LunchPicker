@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('pagetitle')
-    Kies een locatie om te eten
+    <p>Kies een locatie om te eten</p>
+{{--    <x-countdown-timer class="text-xs font-bold flex justify-center" :deadline="$deadline" id="home-timer" />--}}
 @endsection
 
 @section('content')
