@@ -8,8 +8,13 @@
 
         <div class="grid grid-cols-[1fr_2fr_1fr] gap-7">
             <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col items-center">
-                <h1 class="text-3xl font-bold text-gray-800 mb-6">Jelle dirk fiere <button class="ml-2"><i class="fas fa-pen"></i></button></h1>
-
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">
+                    {{ $user->name }}
+                    <button class="ml-2"><i class="fas fa-pen"></i></button>
+                </h1>
+                <p class="text-lg text-gray-600 mb-4">Rol: {{ $user->role }}</p> 
+                {{-- even lopen testen hier met de variablen deze kunnen later mooier gemaakt worden  --}}
+                
                 <div class="w-[250px] h-[150px] bg-gray-200 rounded-lg flex items-center justify-center mb-2">
                     <img src="{{ asset('images/placeholder.png') }}" alt="Profielfoto" class="w-[200px] h-[100px] rounded border-1 border-black object-contain">
                 </div>
