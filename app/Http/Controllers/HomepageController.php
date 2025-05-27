@@ -4,42 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\Models\Deadline;
 
 class HomepageController extends Controller
 {
+
     public function home(Request $request)
     {
-        $status = $request->query('status', 'wachten');
-        $allowedStatuses = ['wachten', 'locatie-stemmen', 'bestellen'];
+        $timezone = 'Europe/Amsterdam';
+        $now = Carbon::now($timezone);
 
-        if (!in_array($status, $allowedStatuses)) {
+        $locatieStart = Carbon::today($timezone)->setTime(12, 00);
+        $locatieDeadline = Carbon::today($timezone)->setTime(14, 15);
+        $orderDeadline = Carbon::today($timezone)->setTime(16, 15);
+
+        if ($now->lt($locatieStart)) {
             $status = 'wachten';
+        } elseif ($now->lt($locatieDeadline)) {
+            $status = 'locatie-stemmen';
+        } elseif ($now->lt($orderDeadline)) {
+            $status = 'bestellen';
         }
 
-        $deadline = Carbon::today()->setTime(14, 15);
-
         return view('home', [
-            'deadline' => $deadline->format('Y-m-d H:i:s'),
+            'locatiestart' => $locatieDeadline->format('Y-m-d H:i:s'),
+            'locatiedeadline' => $locatieDeadline->format('Y-m-d H:i:s'),
+            'orderdeadline' => $orderDeadline->format('Y-m-d H:i:s'),
             'status' => $status,
-        ]);
-    }
-
-    public function vote()
-    {
-        $deadline = Carbon::now()->addMinutes(10);
-
-        return view('vote', [
-            'deadline' => $deadline->format('Y-m-d H:i:s'),
-        ]);
-    }
-
-    public function fromDatabase()
-    {
-        $event = Deadline::latest()->first();
-
-        return view('event', [
-            'deadline' => $event->deadline->format('Y-m-d H:i:s'),
+            'now' => $now->format('Y-m-d H:i:s'),
         ]);
     }
 }
