@@ -1,6 +1,7 @@
 Rename-Item -Path ".env.example" -NewName ".env"
 
 php artisan migrate
+php artisan db:seed
 
 npm install
 npm run build
