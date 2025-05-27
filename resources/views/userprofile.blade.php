@@ -21,12 +21,16 @@
 
                 <button class="bg-blue-700 text-white text-sm rounded px-3 py-1 mb-6">Wijzig afbeelding</button>
 
-                <div class="w-full px-4">
-                    <p class="text-md font-semibold mb-2">Wachtwoord resetten</p>
-                    <input type="password" placeholder="Nieuw Wachtwoord" class="w-full p-2 border rounded mb-3">
-                    <input type="password" placeholder="Herhaal Nieuw Wachtwoord" class="w-full p-2 border rounded mb-5">
-                    <button class="bg-blue-700 text-white w-full py-2 rounded text-sm">Wachtwoord toepassen</button>
-                </div>
+                {{-- we still need the reset logic here and the button to save this --}}
+
+                {{-- <button class="bg-blue-700 text-white w-full py-2 rounded text-sm">Wachtwoord toepassen</button> --}}
+
+                <br></br>
+
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button type="submit" class="bg-blue-700 text-white w-full py-2 rounded text-sm">{{ __('Log Out') }}</button>
+                </form>
             </div>
 
             <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full">
