@@ -1,11 +1,20 @@
 @extends('layouts.master')
 
 @section('pagetitle')
-    <p>Kies een locatie om te eten</p>
-{{--    <x-countdown-timer class="text-xs font-bold flex justify-center" :deadline="$deadline" id="home-timer" />--}}
+    <div class="relative inline-block">
+        <p class="text-lg font-semibold">Kies een locatie om te eten</p>
+
+        @if(session('error'))
+            <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-sm px-4 py-2 rounded shadow-lg z-50 animate-fade-in-down">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
 @endsection
 
+
 @section('content')
+
 
     <div class="relative">
         <form method="post" action="{{route("locations.submit")}}">
@@ -13,8 +22,12 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 @foreach ($locations as $location)
                     <div>
-                        <input class="peer hidden" type="radio" hidden="true" id="{{ $location->id }}" name="location"
-                               value="{{$location->id}}">
+                        <input class="peer hidden" type="radio"
+                               id="{{ $location->id }}"
+                               name="location"
+                               value="{{ $location->id }}"
+                               @if ($location->id == $userVote) checked @endif>
+
 
                         <label for="{{$location->id}}" class="location-btn w-full rounded-xl shadow p-4 flex flex-col items-center justify-center aspect-square
                            transition-colors duration-200 cursor-pointer focus:outline-none bg-white hover:bg-neutral-200 peer-checked:bg-gray-700 ">
