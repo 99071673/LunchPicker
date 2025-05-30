@@ -72,17 +72,36 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+
+    public function edit(Location $location)
     {
-        //
+        return view('admin.location.edit', compact('location'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Location $location)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $location->name = $request->input('name');
+        $location->address = $request->input('address');
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $filename = Str::slug($location->name) . '.' . $extension;
+            $request->file('image')->move(public_path('images'), $filename);
+            $location->image = $filename;
+        }
+
+        $location->save();
+
+        return redirect()->route('admin');
     }
 
     /**

@@ -46,7 +46,9 @@
                 <div class="border-b-4 border-black mb-4">
                     <p class="text-4xl font-bold flex justify-center">Locaties</p>
                 </div>
-                <div class="flex-1 overflow-y-auto relative">
+
+                <!-- Scrollbare lijst -->
+                <div class="flex-1 overflow-y-auto">
                     @if($locations->isEmpty())
                         <p class="text-center text-gray-500">Geen locaties gevonden</p>
                     @else
@@ -75,15 +77,19 @@
                                 </li>
                             @endforeach
                         </ul>
-
-                        <!-- Create button positioned bottom-right -->
-                        <a href="{{ route('location.create') }}"
-                           class="absolute bottom-0.5 right-0.5 bg-blue-500 hover:bg-blue-600 text-white text-base px-5 py-2 rounded-xl font-semibold shadow-lg">
-                            maak nieuwe locatie
-                        </a>
                     @endif
                 </div>
+
+                <!-- Altijd zichtbare knop, onder de scrollbare lijst -->
+                <div class="mt-4 flex justify-end">
+                    <a href="{{ route('location.create') }}"
+                       class="bg-blue-500 hover:bg-blue-600 text-white text-base px-5 py-2 rounded-xl font-semibold shadow-lg">
+                        maak nieuwe locatie
+                    </a>
+                </div>
             </div>
+
+
 
             <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
                 <div class="border-b-4 border-black mb-4">
