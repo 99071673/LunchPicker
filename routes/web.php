@@ -26,6 +26,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])
             ->name('admin')
             ->middleware('can:access-admin');
+        Route::get('/admin/location/create', [LocationController::class, 'create'])
+            ->name('location.create')
+            ->middleware('can:access-admin');;
+        Route::post('/admin/location', [LocationController::class, 'store'])
+            ->name('location.store')
+            ->middleware('can:access-admin');
+        Route::get('/admin/location/{location}/edit', [LocationController::class, 'edit'])
+            ->name('location.edit')
+            ->middleware('can:access-admin');
+        Route::delete('/admin/location/{location}', [LocationController::class, 'destroy'])
+            ->name('location.destroy')
+            ->middleware('can:access-admin');
     });
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
@@ -36,4 +48,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LocationController extends Controller
 {
@@ -24,7 +25,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.location.create');
     }
 
     /**
@@ -32,8 +33,33 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $name = $request->input('name');
+        $address = $request->input('address');
+
+        // Create image name like "mcdonalds.jpg"
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = Str::slug($name) . '.' . $extension;
+
+        // Move image to public/images/
+        $request->file('image')->move(public_path('images'), $filename);
+
+        // Save location with image name
+        Location::create([
+            'name' => $name,
+            'address' => $address,
+            'image' => $filename,
+        ]);
+
+        return redirect()->route('admin')->with('success', 'Locatie aangemaakt.');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -64,7 +90,9 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Location::destroy($id);
+
+        return redirect(route('admin'));
     }
 
     public function submit(Request $request)

@@ -17,6 +17,6 @@ class AdminController extends Controller
         $users = User::all();
         $locations = Location::all();
 
-        return view('admin', compact('users', 'locations'));
+        return view('admin.index', compact('users', 'locations'));
     }
 }
