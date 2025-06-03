@@ -63,9 +63,16 @@
                 <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full">
                     <div class="grid grid-rows-3 h-full">
                         <div class="border-b-4 border-black row-span-1">
-                            <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$deadline"
-                                id="home-timer" />
-
+                            @if($status === 'wachten')
+                                <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$locatiestart"
+                                    id="home-timer" />
+                            @elseif($status === 'locatie-stemmen')
+                                <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$locatiedeadline"
+                                    id="home-timer" />
+                            @elseif($status === 'bestellen')
+                                <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$orderdeadline"
+                                    id="home-timer" />
+                            @endif
 
                             @if($status === 'wachten')
                                 <p class="text-5xl font-bold flex justify-center">Resterende tot volgende lunch</p>
@@ -124,12 +131,27 @@
 
                             </div>
 
-                            <div class="w-80 flex-none flex  items-center justify-center pt-4  pb-4">
-                                <button
-                                    class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
-                                    Doe mee
-                                </button>
+                            <div class="w-80 flex-none flex items-center justify-center pt-4 pb-4">
+                                @if($status === 'locatie-stemmen')
+                                    <a href="{{ route('locations.index') }}"
+                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                        Stem nu
+                                    </a>
+                                @elseif($status === 'bestellen')
+                                    <a href="{{ route('bestelling', 1) }}"
+                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                        Bestel nu
+                                    </a>
+
+                                @elseif($status === 'wachten')
+                                    <a href="#"
+                                        class="bg-gray-500 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow cursor-not-allowed opacity-50"
+                                        onclick="return false;">
+                                        Nog niet beschikbaar
+                                    </a>
+                                @endif
                             </div>
+
                         </div>
 
                     </div>
