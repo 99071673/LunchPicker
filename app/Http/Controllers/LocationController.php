@@ -17,8 +17,13 @@ class LocationController extends Controller
     public function index()
     {
         $locations = Location::all();
-        return view('locations.index', compact('locations'));
+        $userVote = Auth::check()
+            ? Vote::where('user_id', Auth::id())->first()?->location_id
+            : null;
+
+        return view('locations.index', compact('locations', 'userVote'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -115,15 +120,30 @@ class LocationController extends Controller
 
     public function submit(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('home')->with('error', 'Je moet ingelogd zijn om te stemmen.');
+        }
 
-
-        Vote::create([
-            "location_id" => $request->location,
-            "user_id" => Auth::user()->id,
+        $request->validate([
+            'location' => 'required|exists:locations,id',
         ]);
 
-        return redirect()->route('home');
+        $userId = Auth::id();
 
+        $vote = Vote::where('user_id', $userId)->first();
 
+        if ($vote) {
+            $vote->location_id = $request->location;
+            $vote->save();
+        } else {
+            Vote::create([
+                'location_id' => $request->location,
+                'user_id' => $userId,
+            ]);
+        }
+
+        return redirect()->route('home')->with('success', 'Je stem is opgeslagen!');
     }
+
+
 }

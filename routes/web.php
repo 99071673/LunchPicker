@@ -46,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])
             ->name('admin.updateDeadlines')
             ->middleware('can:access-admin');
+        Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
     });
-
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
 
@@ -57,4 +57,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
