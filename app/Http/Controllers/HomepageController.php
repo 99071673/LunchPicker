@@ -4,18 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\DeadlineSetting;
 
 class HomepageController extends Controller
 {
-
     public function home(Request $request)
     {
         $timezone = 'Europe/Amsterdam';
         $now = Carbon::now($timezone);
 
-        $locatieStart = Carbon::today($timezone)->setTime(12, 00);
-        $locatieDeadline = Carbon::today($timezone)->setTime(14, 15);
-        $orderDeadline = Carbon::today($timezone)->setTime(16, 15);
+        $deadlines = DeadlineSetting::first();
+
+        $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '14:15:00';
+        $orderDeadlineTime = $deadlines?->order_deadline ?? '16:15:00';
+
+        $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
+        $locatieStart = (clone $locatieDeadline)->subHour();
+        $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
 
         if ($now->lt($locatieStart)) {
             $status = 'wachten';
@@ -23,10 +28,12 @@ class HomepageController extends Controller
             $status = 'locatie-stemmen';
         } elseif ($now->lt($orderDeadline)) {
             $status = 'bestellen';
+        } else {
+            $status = 'gesloten';
         }
 
         return view('home', [
-            'locatiestart' => $locatieDeadline->format('Y-m-d H:i:s'),
+            'locatiestart' => $locatieStart->format('Y-m-d H:i:s'),
             'locatiedeadline' => $locatieDeadline->format('Y-m-d H:i:s'),
             'orderdeadline' => $orderDeadline->format('Y-m-d H:i:s'),
             'status' => $status,
