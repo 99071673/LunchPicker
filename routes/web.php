@@ -14,6 +14,8 @@ Route::get('/', [HomepageController::class, 'home'])->name('home');;
 Route::middleware(['auth'])->group(function () {
     Route::get('/userprofile', [UserProfileController::class, 'index'])->name('userprofile');
     Route::get('/bestellen/{location_id}', [OrderController::class, 'show'])->name('bestelling');
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.save');
+
     Route::get('/lunchitems/create', [LunchItemController::class, 'create'])->name('lunchitems.create');
     Route::post('/lunchitems', [LunchItemController::class, 'store'])->name('lunchitems.store');
     Route::get('/lunchitems/edit/{lunchitem_id}', [LunchItemController::class, 'edit'])->name('lunchitems.edit')->middleware('can:access-admin');

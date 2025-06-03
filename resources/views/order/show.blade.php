@@ -54,10 +54,6 @@
         <div class="bg-white border rounded shadow p-4 h-[350px] flex flex-col justify-start items-center relative">
             <p class="text-3xl font-semibold mt-1 border-b-2 border-black w-[75%] text-center pb-2">Jouw huidige bestelling</p>
 
-            @php
-                $order = session('order', []);
-            @endphp
-
             <ul class="w-full mt-4 px-2 max-h-[200px] overflow-y-auto flex flex-col gap-2">
                 @forelse ($order as $key => $item)
                     <li class="bg-gray-200 rounded-lg px-4 py-2 flex justify-between items-center">
@@ -97,10 +93,14 @@
                 @endforelse
             </ul>
 
-            <a href="{{ url('/') }}" 
-               class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all absolute bottom-4 right-4 inline-block text-center">
+            <form method="POST" action="{{ route('order.save') }}" class="absolute bottom-4 right-4">
+               @csrf
+                <input type="hidden" name="location_id" value="{{ $location->id }}">
+                <button type="submit"
+                class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all">
                 Rond bestelling af
-            </a>
+                </button>
+            </form>
         </div>
     </div>
 </div>
