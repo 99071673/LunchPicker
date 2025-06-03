@@ -17,7 +17,7 @@ class AdminController extends Controller
         $locations = Location::all();
         $deadlines = DeadlineSetting::first();
 
-        return view('admin', [
+        return view('admin.index', [
             'users' => $users,
             'locations' => $locations,
             'locatie_deadline' => $deadlines?->locatie_deadline
