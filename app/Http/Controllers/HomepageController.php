@@ -50,6 +50,7 @@ class HomepageController extends Controller
             'locatiedeadline' => $locatieDeadline->format('Y-m-d H:i:s'),
             'orderdeadline' => $orderDeadline->format('Y-m-d H:i:s'),
             'status' => $status,
+            'now' => $now->format('Y-m-d H:i:s'),
             'order' => $order,
         ]);
     }
