@@ -26,7 +26,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])
             ->name('admin')
             ->middleware('can:access-admin');
+        Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
     });
+
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
 
