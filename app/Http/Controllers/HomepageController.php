@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\DeadlineSetting;
+use App\Models\Order;
+use App\Models\Deadline;
+
 
 class HomepageController extends Controller
 {
@@ -32,12 +36,40 @@ class HomepageController extends Controller
             $status = 'gesloten';
         }
 
+        $user = Auth::user();
+        $order = null;
+
+        if ($user) {
+            $order = Order::where('user_id', $user->id)
+                ->latest()
+                ->first();
+        }
+
         return view('home', [
             'locatiestart' => $locatieStart->format('Y-m-d H:i:s'),
             'locatiedeadline' => $locatieDeadline->format('Y-m-d H:i:s'),
             'orderdeadline' => $orderDeadline->format('Y-m-d H:i:s'),
             'status' => $status,
             'now' => $now->format('Y-m-d H:i:s'),
+            'order' => $order,
+        ]);
+    }
+
+    public function vote()
+    {
+        $deadline = Carbon::now()->addMinutes(10);
+
+        return view('vote', [
+            'deadline' => $deadline->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+    public function fromDatabase()
+    {
+        $event = Deadline::latest()->first();
+
+        return view('event', [
+            'deadline' => $event->deadline->format('Y-m-d H:i:s'),
         ]);
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use App\Models\LunchItem;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -21,7 +23,9 @@ class OrderController extends Controller
 
         $lunchItems = $query->get();
 
-        return view('order.show', compact('location', 'lunchItems'));
+        $order = session('order', []);
+
+        return view('order.show', compact('location', 'lunchItems', 'order'));
     }
 
     public function add(Request $request)
@@ -80,5 +84,30 @@ class OrderController extends Controller
         }
 
         return back();
+    }
+
+    public function store(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Je moet eerst inloggen om een bestelling te plaatsen.');
+        }
+
+        $orderData = session('order', []);
+
+        if (empty($orderData)) {
+            return redirect()->back()->with('error', 'Geen bestelling om op te slaan.');
+        }
+
+        $locationId = $request->input('location_id');
+
+        Order::create([
+            'location_id' => $locationId,
+            'user_id' => Auth::id(),
+            'items' => json_encode($orderData),
+        ]);
+
+        session()->forget('order');
+
+        return redirect('/')->with('success', 'Bestelling succesvol opgeslagen!');
     }
 }

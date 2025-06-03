@@ -29,36 +29,47 @@
                             <p class="text-4xl font-bold flex justify-center">Huidige bestelling</p>
                         </div>
 
-                        <div class="row-span-6">
-                            <div class="bg-gray-300 rounded-lg shadow p-2 flex items-center justify-between mb-2 mt-2">
-                                <span class="text-2xl font-semibold">2<span class="text-sm align-bottom">x</span></span>
-                                <span class="text-2xl font-semibold ml-2">Patatje klein</span>
-                                <span class="text-2xl font-semibold ml-auto">€ 55.40,-</span>
-                            </div>
+                        <div class="row-span-6 overflow-y-auto">
+                            @if($order && $order->items)
+                                @php
+                                    $items = json_decode($order->items, true);
+                                    $totaal = 0;
+                                @endphp
 
+                                @foreach($items as $item)
+                                    @php
+                                        $itemTotaal = $item['prijs'] * $item['aantal'];
+                                        $totaal += $itemTotaal;
+                                    @endphp
+                                    <div class="bg-gray-300 rounded-lg shadow p-2 flex items-center justify-between mb-2 mt-2">
+                                        <span class="text-2xl font-semibold">{{ $item['aantal'] }}<span class="text-sm align-bottom">x</span></span>
+                                        <span class="text-2xl font-semibold ml-2">{{ $item['naam'] }}</span>
+                                        <span class="text-2xl font-semibold ml-auto">€ {{ number_format($itemTotaal, 2, ',', '.') }},-</span>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-center text-gray-600 mt-10">Geen huidige bestelling</p>
+                            @endif
                         </div>
 
                         <div class="row-span-1 border-t-4 border-black flex items-center ">
-
                             <div class="w-25 flex-1 ">
-                                <p class="text-2xl font-semibold">Totaal: € 110.80,-</p>
-
+                                <p class="text-2xl font-semibold">
+                                    Totaal: € {{ isset($totaal) ? number_format($totaal, 2, ',', '.') : '0,00' }},-
+                                </p>
                             </div>
-
 
                             <div class="w-50 flex-none">
                                 <button
-                                    class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800">
+                                    class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800"
+                                    @if(!($order && $order->items)) disabled class="opacity-50 cursor-not-allowed" @endif
+                                >
                                     Pas Bestelling aan
                                 </button>
                             </div>
 
                         </div>
-
-
                     </div>
-
-
                 </div>
                 <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full">
                     <div class="grid grid-rows-3 h-full">
