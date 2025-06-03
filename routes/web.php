@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])
-            ->name('admin.index')
+            ->name('admin')
             ->middleware('can:access-admin');
         Route::get('/admin/location/create', [LocationController::class, 'create'])
             ->name('location.create')
