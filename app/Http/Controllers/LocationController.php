@@ -42,7 +42,6 @@ class LocationController extends Controller
         $name = $request->input('name');
         $address = $request->input('address');
 
-        // Create image name like "mcdonalds.jpg"
         $extension = $request->file('image')->getClientOriginalExtension();
         $filename = Str::slug($name) . '.' . $extension;
 
