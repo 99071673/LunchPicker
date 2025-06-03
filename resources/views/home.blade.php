@@ -42,9 +42,11 @@
                                         $totaal += $itemTotaal;
                                     @endphp
                                     <div class="bg-gray-300 rounded-lg shadow p-2 flex items-center justify-between mb-2 mt-2">
-                                        <span class="text-2xl font-semibold">{{ $item['aantal'] }}<span class="text-sm align-bottom">x</span></span>
+                                        <span class="text-2xl font-semibold">{{ $item['aantal'] }}<span
+                                                class="text-sm align-bottom">x</span></span>
                                         <span class="text-2xl font-semibold ml-2">{{ $item['naam'] }}</span>
-                                        <span class="text-2xl font-semibold ml-auto">€ {{ number_format($itemTotaal, 2, ',', '.') }},-</span>
+                                        <span class="text-2xl font-semibold ml-auto">€
+                                            {{ number_format($itemTotaal, 2, ',', '.') }},-</span>
                                     </div>
                                 @endforeach
                             @else
@@ -62,8 +64,7 @@
                             <div class="w-50 flex-none">
                                 <button
                                     class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800"
-                                    @if(!($order && $order->items)) disabled class="opacity-50 cursor-not-allowed" @endif
-                                >
+                                    @if(!($order && $order->items)) disabled class="opacity-50 cursor-not-allowed" @endif>
                                     Pas Bestelling aan
                                 </button>
                             </div>
@@ -111,7 +112,7 @@
                                     <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
                                         class="w-auto h-[15rem] object-contain" />
                                 @elseif($status === 'bestellen')
-                                    <img src="{{ asset('images/placeholder.png') }}" alt="Bestellen"
+                                    <img src="{{ asset('images/' . $location->image) }}" alt="Bestellen"
                                         class="w-auto h-[15rem] object-contain" />
                                 @endif
                             </div>
@@ -149,7 +150,7 @@
                                         Stem nu
                                     </a>
                                 @elseif($status === 'bestellen')
-                                    <a href="{{ route('bestelling', 1) }}"
+                                    <a href="{{ route('bestelling', ['location_id' => $location_id]) }}"
                                         class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
                                         Bestel nu
                                     </a>

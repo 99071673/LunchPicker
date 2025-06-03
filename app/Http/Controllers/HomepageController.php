@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\DeadlineSetting;
 use App\Models\Order;
-use App\Models\Deadline;
-
+use App\Models\Vote;
+use App\Models\Location;
 
 class HomepageController extends Controller
 {
@@ -38,11 +38,20 @@ class HomepageController extends Controller
 
         $user = Auth::user();
         $order = null;
+        $location_id = null;
+        $location = null;
 
         if ($user) {
             $order = Order::where('user_id', $user->id)
                 ->latest()
                 ->first();
+
+            $vote = Vote::where('user_id', $user->id)->first();
+            $location_id = $vote?->location_id;
+
+            if ($location_id) {
+                $location = Location::find($location_id);
+            }
         }
 
         return view('home', [
@@ -52,6 +61,8 @@ class HomepageController extends Controller
             'status' => $status,
             'now' => $now->format('Y-m-d H:i:s'),
             'order' => $order,
+            'location_id' => $location_id,
+            'location' => $location,
         ]);
     }
 
@@ -61,15 +72,6 @@ class HomepageController extends Controller
 
         return view('vote', [
             'deadline' => $deadline->format('Y-m-d H:i:s'),
-        ]);
-    }
-
-    public function fromDatabase()
-    {
-        $event = Deadline::latest()->first();
-
-        return view('event', [
-            'deadline' => $event->deadline->format('Y-m-d H:i:s'),
         ]);
     }
 }
