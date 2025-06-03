@@ -23,10 +23,16 @@ class LunchItemController extends Controller
         ]);
 
         LunchItem::create($validated);
+        
 
         return redirect()
             ->route('bestelling', ['location_id' => $validated['location_id']])
             ->with('success', 'Lunchitem succesvol toegevoegd!');
+    }
+
+    public function edit(Location $location)
+    {
+        return view('admin.lunchitem.edit', compact('location'));
     }
 }
 

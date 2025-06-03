@@ -18,8 +18,13 @@ class Location extends Model
     {
         return $this->hasMany(Vote::class);
     }
-    
-    public function create(Location $location)
+
+    public function lunchItems()
+    {
+        return $this->hasMany(LunchItem::class);
+    }
+
+    public function createLunchitems(Location $location)
     {
         return view('lunchitems.create', compact('location'));
     }

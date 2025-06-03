@@ -16,6 +16,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bestellen/{location_id}', [OrderController::class, 'show'])->name('bestelling');
     Route::get('/lunchitems/create', [LunchItemController::class, 'create'])->name('lunchitems.create');
     Route::post('/lunchitems', [LunchItemController::class, 'store'])->name('lunchitems.store');
+    Route::get('/lunchitems/edit/{lunchitem_id}', [LunchItemController::class, 'edit'])->name('lunchitems.edit')->middleware('can:access-admin');
+    Route::delete('/lunchitems/{lunchitem_id}', [LunchItemController::class, 'destroy'])->name('lunchitems.destroy')->middleware('can:access-admin');
     Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
     Route::post('/order/update', [OrderController::class, 'update'])->name('order.update');
     Route::post('/order/remove', [OrderController::class, 'remove'])->name('order.remove');
@@ -26,9 +28,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])
             ->name('admin')
             ->middleware('can:access-admin');
+        Route::get('/admin/location/create', [LocationController::class, 'create'])
+            ->name('location.create')
+            ->middleware('can:access-admin');;
+        Route::post('/admin/location', [LocationController::class, 'store'])
+            ->name('location.store')
+            ->middleware('can:access-admin');
+        Route::get('/admin/location/{location}/edit', [LocationController::class, 'edit'])
+            ->name('location.edit')
+            ->middleware('can:access-admin');
+        Route::put('/locations/{location}', [LocationController::class, 'update'])
+            ->name('locations.update')
+            ->middleware('can:access-admin');
+        Route::delete('/admin/location/{location}', [LocationController::class, 'destroy'])
+            ->name('location.destroy')
+            ->middleware('can:access-admin');
+        Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])
+            ->name('admin.updateDeadlines')
+            ->middleware('can:access-admin');
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
     });
-
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
 
