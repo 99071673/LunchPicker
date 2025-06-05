@@ -52,6 +52,15 @@ class HomepageController extends Controller
             if ($location_id) {
                 $location = Location::find($location_id);
             }
+
+            if ($status === 'bestellen' && !$vote) {
+                $status = 'locatie-stemmen';
+                $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
+            }
+
+            if ($status === 'locatie-stemmen' && $vote) {
+                $status = 'bestellen';
+            }
         }
 
         return view('home', [
@@ -63,15 +72,6 @@ class HomepageController extends Controller
             'order' => $order,
             'location_id' => $location_id,
             'location' => $location,
-        ]);
-    }
-
-    public function vote()
-    {
-        $deadline = Carbon::now()->addMinutes(10);
-
-        return view('vote', [
-            'deadline' => $deadline->format('Y-m-d H:i:s'),
         ]);
     }
 }
