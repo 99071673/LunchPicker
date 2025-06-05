@@ -112,8 +112,13 @@
                                     <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
                                         class="w-auto h-[15rem] object-contain" />
                                 @elseif($status === 'bestellen')
-                                    <img src="{{ asset('images/' . $location->image) }}" alt="Bestellen"
-                                        class="w-auto h-[15rem] object-contain" />
+                                    @if ($location->image)
+                                        <img src="{{ asset('images/' . $location->image) }}" alt="Bestellen"
+                                            class="w-auto h-[15rem] object-contain" />
+                                    @else
+                                        <img src="{{ asset('images/unknownlocation.png') }}" alt="Bestellen"
+                                            class="w-auto h-[15rem] object-contain" />
+                                    @endif
                                 @endif
                             </div>
 
