@@ -46,4 +46,22 @@ class AdminController extends Controller
 
         return redirect()->route('admin')->with('success', 'Deadlines succesvol bijgewerkt.');
     }
+
+    public function setStatus(Request $request)
+    {
+        $request->validate([
+            'status' => 'required|in:wachten,locatie-stemmen,bestellen,gesloten',
+        ]);
+
+        session(['debug_status' => $request->status]);
+
+        return back()->with('success', 'Debug status set to: ' . $request->status);
+    }
+
+    public function clearStatus()
+    {
+        session()->forget('debug_status');
+
+        return back()->with('success', 'Debug status cleared.');
+    }
 }

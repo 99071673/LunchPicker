@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('admin.updateDeadlines')
             ->middleware('can:access-admin');
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
+        Route::post('/admin/set-status', [AdminController::class, 'setStatus'])->name('admin.setStatus');
+        Route::post('/admin/clear-status', [AdminController::class, 'clearStatus'])->name('admin.clearStatus');
     });
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
