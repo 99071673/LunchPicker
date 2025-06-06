@@ -17,23 +17,33 @@ class HomepageController extends Controller
         $timezone = 'Europe/Amsterdam';
         $now = Carbon::now($timezone);
 
-        $deadlines = DeadlineSetting::first();
+        if (session()->has('debug_status')) {
+            $status = session('debug_status');
+            $deadlines = DeadlineSetting::first();
+            $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '14:15:00';
+            $orderDeadlineTime = $deadlines?->order_deadline ?? '16:15:00';
 
-        $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '14:15:00';
-        $orderDeadlineTime = $deadlines?->order_deadline ?? '16:15:00';
-
-        $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
-        $locatieStart = (clone $locatieDeadline)->subHour();
-        $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
-
-        if ($now->lt($locatieStart)) {
-            $status = 'wachten';
-        } elseif ($now->lt($locatieDeadline)) {
-            $status = 'locatie-stemmen';
-        } elseif ($now->lt($orderDeadline)) {
-            $status = 'bestellen';
+            $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
+            $locatieStart = (clone $locatieDeadline)->subHour();
+            $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
         } else {
-            $status = 'gesloten';
+            $deadlines = DeadlineSetting::first();
+            $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '14:15:00';
+            $orderDeadlineTime = $deadlines?->order_deadline ?? '16:15:00';
+
+            $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
+            $locatieStart = (clone $locatieDeadline)->subHour();
+            $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
+
+            if ($now->lt($locatieStart)) {
+                $status = 'wachten';
+            } elseif ($now->lt($locatieDeadline)) {
+                $status = 'locatie-stemmen';
+            } elseif ($now->lt($orderDeadline)) {
+                $status = 'bestellen';
+            } else {
+                $status = 'gesloten';
+            }
         }
 
         $user = Auth::user();
@@ -42,10 +52,7 @@ class HomepageController extends Controller
         $location = null;
 
         if ($user) {
-            $order = Order::where('user_id', $user->id)
-                ->latest()
-                ->first();
-
+            $order = Order::where('user_id', $user->id)->latest()->first();
             $vote = Vote::where('user_id', $user->id)->first();
             $location_id = $vote?->location_id;
 
