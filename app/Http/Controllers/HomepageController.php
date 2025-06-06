@@ -64,15 +64,6 @@ class HomepageController extends Controller
             $vote = Vote::where('user_id', $user->id)->first();
             $location_id = $vote?->location_id;
             $location = $location_id ? Location::find($location_id) : null;
-
-            if ($status === 'bestellen' && !$vote) {
-                $status = 'locatie-stemmen';
-                $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
-            }
-
-            if ($status === 'locatie-stemmen' && $vote) {
-                $status = 'bestellen';
-            }
         }
 
         return view('home', [
