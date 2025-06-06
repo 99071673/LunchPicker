@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Models\DeadlineSetting;
 use App\Models\Order;
 use App\Models\Vote;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class HomepageController extends Controller
@@ -100,4 +101,4 @@ class HomepageController extends Controller
             'location' => $location,
         ]);
     }
-}
+}}
