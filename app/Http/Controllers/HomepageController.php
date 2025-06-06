@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\DeadlineSetting;
 use App\Models\Order;
 use App\Models\Vote;
-use App\Models\Location;
+use Illuminate\Support\Facades\Cache;
 
 class HomepageController extends Controller
 {
@@ -35,16 +35,33 @@ class HomepageController extends Controller
             $locatieStart = (clone $locatieDeadline)->subHour();
             $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
 
-            if ($now->lt($locatieStart)) {
-                $status = 'wachten';
-            } elseif ($now->lt($locatieDeadline)) {
-                $status = 'locatie-stemmen';
-            } elseif ($now->lt($orderDeadline)) {
-                $status = 'bestellen';
-            } else {
-                $status = 'gesloten';
-            }
+        $status = 'gesloten';
+        $winningLocationId = null;
+
+        if ($now->lt($locatieStart)) {
+            $status = 'wachten';
+        } elseif ($now->lt($locatieDeadline)) {
+            $status = 'locatie-stemmen';
+        } elseif ($now->lt($orderDeadline)) {
+            $status = 'bestellen';
+
+            // Check if a winning location is already determined for today
+            $winningLocationId = Cache::remember('winning_location_' . $now->toDateString(), 86400, function () use ($timezone) {
+                return Vote::whereDate('created_at', Carbon::today($timezone))
+                    ->select('location_id')
+                    ->groupBy('location_id')
+                    ->orderByRaw('COUNT(*) DESC')
+                    ->limit(1)
+                    ->value('location_id');
+            });
         }
+        $winningLocationName = null;
+
+        if ($winningLocationId) {
+            $winningLocation = Location::find($winningLocationId);
+            $winningLocationName = $winningLocation?->name ?? 'Onbekend';
+        }
+
 
         $user = Auth::user();
         $order = null;
@@ -76,6 +93,8 @@ class HomepageController extends Controller
             'orderdeadline' => $orderDeadline->format('Y-m-d H:i:s'),
             'status' => $status,
             'now' => $now->format('Y-m-d H:i:s'),
+            'winning_location_id' => $winningLocationId,
+            'winning_location_name' => $winningLocationName,
             'order' => $order,
             'location_id' => $location_id,
             'location' => $location,
