@@ -45,19 +45,14 @@ class HomepageController extends Controller
                     ->orderByDesc('vote_count')
                     ->limit(1)
                     ->value('location_id');
-
-
             });
-//                dd($winningLocationId);
         } else {
             $winningLocationId = null;
         }
 
         $winningLocationName = null;
-//        dd($winningLocationId);
         if ($winningLocationId) {
             $winningLocationName = Location::find($winningLocationId)?->name ?? 'Onbekend';
-            dd($winningLocationName);
         }
 
         $user = Auth::user();
