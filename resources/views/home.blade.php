@@ -108,7 +108,7 @@
                                 <p class="text-5xl font-bold">Er wordt nu gestemd voor locatie:</p>
                             @elseif($status === 'bestellen')
 
-                                <p class="text-5xl font-bold">Er wordt nu besteld bij: {{ $winningLocationName ?? 'Onbekend' }}</p>
+                                <p class="text-5xl font-bold">Er wordt nu besteld bij: {{ $winning_location_name ?? 'Onbekend' }}</p>
                             @else
                                 <p class="text-5xl font-bold">Nog even geduld...</p>
                             @endif
@@ -121,9 +121,9 @@
                                     <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
                                         class="w-auto h-[15rem] object-contain" />
                                 @elseif($status === 'bestellen')
-                                    @if(isset($winningLocationName))
-                                        <img src="{{ asset('images/' . Str::slug($winningLocationName) . '.png') }}"
-                                             alt="{{ $winningLocationName }}"
+                                    @if(isset($winning_location_name))
+                                        <img src="{{ asset('images/' . Str::slug($winning_location_name) . '.png') }}"
+                                             alt="{{ $winning_location_name }}"
                                              class="w-auto h-[15rem] object-contain" />
                                     @else
                                         <img src="{{ asset('images/unknownlocation.png') }}" alt="Bestellen"
@@ -168,7 +168,7 @@
                                         Stem nu
                                     </a>
                                 @elseif($status === 'bestellen')
-                                    <a href="{{ route('bestelling', $winningLocationName ?? 1) }}"
+                                    <a href="{{ route('bestelling', $winning_location_id ?? 1) }}"
                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
                                         Bestel nu
                                     </a>

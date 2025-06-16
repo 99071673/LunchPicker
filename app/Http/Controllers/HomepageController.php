@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 class HomepageController extends Controller
 {
     public function home(Request $request)
-    {   
+    {
         $timezone = 'Europe/Amsterdam';
         $now = Carbon::now($timezone);
 
@@ -25,6 +25,10 @@ class HomepageController extends Controller
         $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
         $locatieStart = (clone $locatieDeadline)->subHour();
         $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
+        $winningLocationId = null;
+        $winningLocationName = null;
+
+
 
         $status = session()->has('debug_status');
         if (session()->has('debug_status') == false) {
@@ -34,25 +38,20 @@ class HomepageController extends Controller
                 $status = 'locatie-stemmen';
             } elseif ($now->lt($orderDeadline)) {
                 $status = 'bestellen';
-            }
-            $winningLocationId = Cache::remember('winning_location_' . $now->toDateString(), 86400, function () use ($timezone) {
-                $date = Carbon::today($timezone)->setTimezone('UTC');
 
-
-                return Vote::whereDate('created_at', $date)
+                $winningLocationId = Vote::whereDate('updated_at', now()->setTimezone($timezone))
                     ->selectRaw('location_id, COUNT(*) as vote_count')
                     ->groupBy('location_id')
                     ->orderByDesc('vote_count')
                     ->limit(1)
                     ->value('location_id');
-            });
-        } else {
-            $winningLocationId = null;
-        }
 
-        $winningLocationName = null;
-        if ($winningLocationId) {
-            $winningLocationName = Location::find($winningLocationId)?->name ?? 'Onbekend';
+                if ($winningLocationId) {
+                    $winningLocationName = Location::findOrFail($winningLocationId)?->name ?? 'Onbekend';
+
+                }
+
+            }
         }
 
         $user = Auth::user();
@@ -72,7 +71,6 @@ class HomepageController extends Controller
             }
 
         }
-
         return view('home', [
             'locatiestart' => $locatieStart->format('Y-m-d H:i:s'),
             'locatiedeadline' => $locatieDeadline->format('Y-m-d H:i:s'),

@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Vote;
 use Livewire\Component;
-use App\Http\Controllers\TimerController;
+use Illuminate\Support\Carbon;
 
 class VoteCounter extends Component
 {
@@ -12,7 +12,7 @@ class VoteCounter extends Component
 
     public function getCount()
     {
-        $this->count = Vote::count();
+        $this->count = Vote::whereDate('updated_at', Carbon::today())->count();
     }
 
     public function render()
@@ -22,4 +22,3 @@ class VoteCounter extends Component
         return view('livewire.vote-counter');
     }
 }
-

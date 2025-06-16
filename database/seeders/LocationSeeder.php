@@ -17,7 +17,7 @@ class LocationSeeder extends Seeder
             [
                 'name' => 'paulus frites paleis',
                 'address' => 'Smidsweg 23A, 3295 BT s-Gravendeel',
-                'image' => 'paulus.png',
+                'image' => 'paulus-frites-paleis.png',
             ],
             [
                 'name' => 'Jumbo',
@@ -27,7 +27,7 @@ class LocationSeeder extends Seeder
             [
                 'name' => 'Ozzy’s Grillroom',
                 'address' => 'Hendrik Hamerstraat 95, 3295 CG s-Gravendeel',
-                'image' => 'ozzys.png',
+                'image' => 'ozzys-grillroom.png',
             ],
             [
                 'name' => 'quickly',
@@ -37,7 +37,7 @@ class LocationSeeder extends Seeder
             [
                 'name' => 'sushi bar kai',
                 'address' => 'Van der Merckstraat 6, 3295 XX s-Gravendeel',
-                'image' => 'kai.png',
+                'image' => 'sushi-bar-kai.png',
             ],
         ]);
     }
