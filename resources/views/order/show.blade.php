@@ -1,7 +1,11 @@
 @extends('layouts.master')
 
 @section('pagetitle')
-    Deadline
+    <div class="flex flex-col items-center">
+        @if($status === 'bestellen')
+            <x-countdown-timer class="text-3xl font-bold" :deadline="$orderdeadline" id="home-timer" />
+        @endif
+    </div>
 @endsection
 
 @section('content')
