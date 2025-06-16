@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 class HomepageController extends Controller
 {
     public function home(Request $request)
-    {
+    {   
         $timezone = 'Europe/Amsterdam';
         $now = Carbon::now($timezone);
 
