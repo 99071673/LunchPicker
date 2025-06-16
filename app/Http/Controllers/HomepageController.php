@@ -19,16 +19,15 @@ class HomepageController extends Controller
         $now = Carbon::now($timezone);
 
         $deadlines = DeadlineSetting::first();
-        $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '14:15:00';
+        $locatieDeadlineTime = $deadlines?->locatie_deadline ?? '11:15:00';
         $orderDeadlineTime = $deadlines?->order_deadline ?? '16:15:00';
 
         $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($locatieDeadlineTime);
         $locatieStart = (clone $locatieDeadline)->subHour();
         $orderDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
 
-        $status = session()->has('debug_status') ? session('debug_status') : 'gesloten';
-
-        if (!session()->has('debug_status')) {
+        $status = session()->has('debug_status');
+        if (session()->has('debug_status') == false) {
             if ($now->lt($locatieStart)) {
                 $status = 'wachten';
             } elseif ($now->lt($locatieDeadline)) {
@@ -36,22 +35,29 @@ class HomepageController extends Controller
             } elseif ($now->lt($orderDeadline)) {
                 $status = 'bestellen';
             }
-
             $winningLocationId = Cache::remember('winning_location_' . $now->toDateString(), 86400, function () use ($timezone) {
-                return Vote::whereDate('created_at', Carbon::today($timezone))
-                    ->select('location_id')
+                $date = Carbon::today($timezone)->setTimezone('UTC');
+
+
+                return Vote::whereDate('created_at', $date)
+                    ->selectRaw('location_id, COUNT(*) as vote_count')
                     ->groupBy('location_id')
-                    ->orderByRaw('COUNT(*) DESC')
+                    ->orderByDesc('vote_count')
                     ->limit(1)
                     ->value('location_id');
+
+
             });
+//                dd($winningLocationId);
         } else {
             $winningLocationId = null;
         }
 
         $winningLocationName = null;
+//        dd($winningLocationId);
         if ($winningLocationId) {
             $winningLocationName = Location::find($winningLocationId)?->name ?? 'Onbekend';
+            dd($winningLocationName);
         }
 
         $user = Auth::user();
@@ -70,9 +76,6 @@ class HomepageController extends Controller
                 $locatieDeadline = Carbon::today($timezone)->setTimeFromTimeString($orderDeadlineTime);
             }
 
-            if ($status === 'locatie-stemmen' && $vote) {
-                $status = 'bestellen';
-            }
         }
 
         return view('home', [

@@ -51,7 +51,8 @@ class LocationController extends Controller
         $filename = Str::slug($name) . '.' . $extension;
 
         // Move image to public/images/
-        $request->file('image')->move(public_path('images'), $filename);
+        $destinationPath = base_path('lunchpicker.davinci-itenmedia.nl/public_html/images');
+        $request->file('image')->move($destinationPath, $filename);
 
         // Save location with image name
         Location::create([
@@ -62,7 +63,6 @@ class LocationController extends Controller
 
         return redirect()->route('admin')->with('success', 'Locatie aangemaakt.');
     }
-
 
 
     /**

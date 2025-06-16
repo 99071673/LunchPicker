@@ -85,6 +85,9 @@
                             @elseif($status === 'bestellen')
                                 <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$orderdeadline"
                                     id="home-timer" />
+                            @else
+                                <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$locatiestart"
+                                                   id="home-timer" />
                             @endif
 
                             @if($status === 'wachten')
@@ -93,7 +96,9 @@
                                 <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
                             @elseif($status === 'bestellen')
                                 <p class="text-5xl font-bold flex justify-center">Resterende om te bestellen</p>
-                            @endif
+                            @else
+                                    <p class="text-5xl font-bold flex justify-center">Resterende tot volgende lunch</p>
+                                @endif
                         </div>
 
                         <div class="row-span-2 pt-4 flex-col flex items-center">
@@ -102,7 +107,10 @@
                             @elseif($status === 'locatie-stemmen')
                                 <p class="text-5xl font-bold">Er wordt nu gestemd voor locatie:</p>
                             @elseif($status === 'bestellen')
-                                <p class="text-5xl font-bold">Er wordt nu besteld bij: {{ $winning_location_name ?? 'Onbekend' }}</p>
+
+                                <p class="text-5xl font-bold">Er wordt nu besteld bij: {{ $winningLocationName ?? 'Onbekend' }}</p>
+                            @else
+                                <p class="text-5xl font-bold">Nog even geduld...</p>
                             @endif
 
                             <div class="mt-4">
@@ -113,14 +121,17 @@
                                     <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
                                         class="w-auto h-[15rem] object-contain" />
                                 @elseif($status === 'bestellen')
-                                    @if(isset($winning_location_name))
-                                        <img src="{{ asset('images/locations/' . Str::slug($winning_location_name) . '.png') }}"
-                                             alt="{{ $winning_location_name }}"
+                                    @if(isset($winningLocationName))
+                                        <img src="{{ asset('images/' . Str::slug($winningLocationName) . '.png') }}"
+                                             alt="{{ $winningLocationName }}"
                                              class="w-auto h-[15rem] object-contain" />
                                     @else
-                                        <img src="{{ asset('images/placeholder.png') }}" alt="Bestellen"
+                                        <img src="{{ asset('images/unknownlocation.png') }}" alt="Bestellen"
                                              class="w-auto h-[15rem] object-contain" />
                                     @endif
+                                @else
+                                    <img src="{{ asset('images/wait-lunch.png') }}" alt="Wachten"
+                                         class="w-auto h-[15rem] object-contain" />
                                 @endif
                             </div>
 
@@ -157,7 +168,7 @@
                                         Stem nu
                                     </a>
                                 @elseif($status === 'bestellen')
-                                    <a href="{{ route('bestelling', $winning_location_id ?? 1) }}"
+                                    <a href="{{ route('bestelling', $winningLocationName ?? 1) }}"
                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
                                         Bestel nu
                                     </a>
@@ -166,6 +177,12 @@
                                     <a href="#"
                                         class="bg-gray-500 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow cursor-not-allowed opacity-50"
                                         onclick="return false;">
+                                        Nog niet beschikbaar
+                                    </a>
+                                @else
+                                    <a href="#"
+                                       class="bg-gray-500 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow cursor-not-allowed opacity-50"
+                                       onclick="return false;">
                                         Nog niet beschikbaar
                                     </a>
                                 @endif
