@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\LunchgetterController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\HomepageController;
@@ -24,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/remove', [OrderController::class, 'remove'])->name('order.remove');
     Route::resource('locations', LocationController::class);
     Route::post('locations/submit', [LocationController::class, 'submit'])->name('locations.submit');
+    Route::get('/lunchgetter/orders', [LunchgetterController::class, 'index'])->name('lunchgetter.orders');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])
