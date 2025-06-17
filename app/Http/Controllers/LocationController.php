@@ -51,8 +51,16 @@ class LocationController extends Controller
         $filename = Str::slug($name) . '.' . $extension;
 
         // Move image to public/images/
-        $destinationPath = base_path('lunchpicker.davinci-itenmedia.nl/public_html/images');
+        if (app()->environment('local')) {
+            // Localhost: store in public/images
+            $destinationPath = public_path('images');
+        } else {
+            // Production: go one directory up, then into public_html/images
+            $destinationPath = base_path('../public_html/images');
+        }
+
         $request->file('image')->move($destinationPath, $filename);
+
 
         // Save location with image name
         Location::create([
