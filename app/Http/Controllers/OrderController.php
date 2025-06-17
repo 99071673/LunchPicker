@@ -58,6 +58,7 @@ class OrderController extends Controller
                 $status = 'gesloten';
             }
         }
+
         return view('order.show', array_merge(
             compact('location', 'lunchItems', 'order'),
             [
@@ -147,7 +148,6 @@ class OrderController extends Controller
             'items' => json_encode($orderData),
         ]);
 
-        session()->forget('order');
 
         return redirect('/')->with('success', 'Bestelling succesvol opgeslagen!');
     }
