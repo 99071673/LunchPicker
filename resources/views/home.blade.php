@@ -64,11 +64,17 @@
                                 </p>
                             </div>
                             <div class="w-50 flex-none">
-                                <button
-                                    class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800"
-                                    @if(!($order && $order->items)) disabled class="opacity-50 cursor-not-allowed" @endif>
-                                    Pas Bestelling aan
-                                </button>
+                                @if($order && $order->items)
+                                    <a href="{{ route('bestelling', ['location_id' => $location_id]) }}"
+                                        class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800">
+                                        Pas Bestelling aan
+                                    </a>
+                                @else
+                                    <button
+                                        class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow opacity-50 cursor-not-allowed" disabled>
+                                        Pas Bestelling aan
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>

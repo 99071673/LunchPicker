@@ -13,6 +13,7 @@
             @if($orders->isEmpty())
                 <p>No orders found.</p>
             @else
+            <div class="flex justify-evenly flex-wrap gap-5">
                 @foreach($orders as $order)
                     <div class="w-[500px] border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
                         <div class="mb-2">
@@ -40,6 +41,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             @endif
         </div>
     </div>
