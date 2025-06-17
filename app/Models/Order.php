@@ -16,6 +16,12 @@ class Order extends Model
         'items' => 'array',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
     public function location()
     {
         return $this->belongsTo(Location::class);
