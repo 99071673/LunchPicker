@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
         Route::post('/admin/set-status', [AdminController::class, 'setStatus'])->name('admin.setStatus');
         Route::post('/admin/clear-status', [AdminController::class, 'clearStatus'])->name('admin.clearStatus');
+        Route::post('/admin/clear', [AdminController::class, 'clearOrdersAndVotes'])->name('admin.clearOrdersAndVotes');
     });
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');

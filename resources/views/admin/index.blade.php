@@ -110,38 +110,46 @@
 
 
 
-                    <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
-                        <div class="border-b-4 border-black mb-4">
-                            <p class="text-4xl font-bold flex justify-center">Overig</p>
-                        </div>
+            <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
+                <div class="border-b-4 border-black mb-4">
+                    <p class="text-4xl font-bold flex justify-center">Overig</p>
+                </div>
 
-                        <div class="flex-1 overflow-y-auto space-y-4">
-                            <form method="POST" action="{{ route('admin.setStatus') }}" class="space-y-2">
-                                @csrf
-                                <label class="block text-lg">Debug Status Override</label>
-                                <select name="status" class="w-full border px-4 py-2 rounded-lg">
-                                    <option value="wachten">wachten</option>
-                                    <option value="locatie-stemmen">locatie-stemmen</option>
-                                    <option value="bestellen">bestellen</option>
-                                    <option value="gesloten">gesloten</option>
-                                </select>
-                                <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
-                                    Set Debug Status
-                                </button>
-                            </form>
+                <div class="flex-1 overflow-y-auto space-y-4">
+                    <form method="POST" action="{{ route('admin.setStatus') }}" class="space-y-2">
+                        @csrf
+                        <label class="block text-lg">Debug Status Override</label>
+                        <select name="status" class="w-full border px-4 py-2 rounded-lg">
+                            <option value="wachten">wachten</option>
+                            <option value="locatie-stemmen">locatie-stemmen</option>
+                            <option value="bestellen">bestellen</option>
+                            <option value="gesloten">gesloten</option>
+                        </select>
+                        <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                            Set Debug Status
+                        </button>
+                    </form>
 
-                            <form method="POST" action="{{ route('admin.clearStatus') }}">
-                                @csrf
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">
-                                    Clear Debug Status
-                                </button>
-                            </form>
+                    <form method="POST" action="{{ route('admin.clearStatus') }}">
+                        @csrf
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                            Clear Debug Status
+                        </button>
+                    </form>
 
-                            @if(session()->has('debug_status'))
-                                <p class="text-green-600 font-bold">Current debug status: {{ session('debug_status') }}</p>
-                            @endif
-                        </div>
-                    </div>
+                    @if(session()->has('debug_status'))
+                        <p class="text-green-600 font-bold">Current debug status: {{ session('debug_status') }}</p>
+                    @endif
+
+                    <form method="POST" action="{{ route('admin.clearOrdersAndVotes') }}"
+                        onsubmit="return confirm('Weet je zeker dat je alle stemmen en bestellingen wilt verwijderen?');">
+                        @csrf
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                            Verwijder alle stemmen en bestellingen
+                        </button>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>
