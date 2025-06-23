@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\DeadlineSetting;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\CleanupService;
 
 class AdminController extends Controller
 {
@@ -63,5 +64,12 @@ class AdminController extends Controller
         session()->forget('debug_status');
 
         return back()->with('success', 'Debug status cleared.');
+    }
+
+    public function clearOrdersAndVotes(CleanupService $cleanupService)
+    {
+        $cleanupService->clearOrdersAndVotes();
+
+        return back()->with('success', 'Alle bestellingen en stemmen zijn verwijderd.');
     }
 }
