@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@php use Illuminate\Support\Str; @endphp
+
 @section('pagetitle')
     Home
 @endsection
@@ -55,20 +57,25 @@
                         </div>
 
                         <div class="row-span-1 border-t-4 border-black flex items-center ">
+
                             <div class="w-25 flex-1 ">
                                 <p class="text-2xl font-semibold">
                                     Totaal: € {{ isset($totaal) ? number_format($totaal, 2, ',', '.') : '0,00' }},-
                                 </p>
                             </div>
-
                             <div class="w-50 flex-none">
-                                <button
-                                    class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800"
-                                    @if(!($order && $order->items)) disabled class="opacity-50 cursor-not-allowed" @endif>
-                                    Pas Bestelling aan
-                                </button>
+                                @if($order && $order->items)
+                                    <a href="{{ route('bestelling', ['location_id' => $location_id]) }}"
+                                        class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow hover:bg-teal-800">
+                                        Pas Bestelling aan
+                                    </a>
+                                @else
+                                    <button
+                                        class="bg-teal-900 text-white text-1xl font-bold py-2 px-5 rounded-lg shadow opacity-50 cursor-not-allowed" disabled>
+                                        Pas Bestelling aan
+                                    </button>
+                                @endif
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -84,6 +91,9 @@
                             @elseif($status === 'bestellen')
                                 <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$orderdeadline"
                                     id="home-timer" />
+                            @else
+                                <x-countdown-timer class="text-7xl font-bold flex justify-center" :deadline="$locatiestart"
+                                                   id="home-timer" />
                             @endif
 
                             @if($status === 'wachten')
@@ -92,16 +102,21 @@
                                 <p class="text-5xl font-bold flex justify-center">Resterende om te stemmen</p>
                             @elseif($status === 'bestellen')
                                 <p class="text-5xl font-bold flex justify-center">Resterende om te bestellen</p>
-                            @endif
+                            @else
+                                    <p class="text-5xl font-bold flex justify-center">Resterende tot volgende lunch</p>
+                                @endif
                         </div>
 
                         <div class="row-span-2 pt-4 flex-col flex items-center">
                             @if($status === 'wachten')
-
+                                <p class="text-5xl font-bold">Nog even geduld...</p>
                             @elseif($status === 'locatie-stemmen')
                                 <p class="text-5xl font-bold">Er wordt nu gestemd voor locatie:</p>
                             @elseif($status === 'bestellen')
-                                <p class="text-5xl font-bold">Er wordt nu besteld bij:</p>
+
+                                <p class="text-5xl font-bold">Er wordt nu besteld bij: {{ $winning_location_name ?? 'Onbekend' }}</p>
+                            @else
+                                <p class="text-5xl font-bold">Nog even geduld...</p>
                             @endif
 
                             <div class="mt-4">
@@ -112,13 +127,17 @@
                                     <img src="{{ asset('images/unknownlocation.png') }}" alt="Stem voor locatie"
                                         class="w-auto h-[15rem] object-contain" />
                                 @elseif($status === 'bestellen')
-                                    @if ($location->image)
-                                        <img src="{{ asset('images/' . $location->image) }}" alt="Bestellen"
-                                            class="w-auto h-[15rem] object-contain" />
+                                    @if(isset($winning_location_name))
+                                        <img src="{{ asset('images/' . Str::slug($winning_location_name) . '.png') }}"
+                                             alt="{{ $winning_location_name }}"
+                                             class="w-auto h-[15rem] object-contain" />
                                     @else
                                         <img src="{{ asset('images/unknownlocation.png') }}" alt="Bestellen"
-                                            class="w-auto h-[15rem] object-contain" />
+                                             class="w-auto h-[15rem] object-contain" />
                                     @endif
+                                @else
+                                    <img src="{{ asset('images/wait-lunch.png') }}" alt="Wachten"
+                                         class="w-auto h-[15rem] object-contain" />
                                 @endif
                             </div>
 
@@ -127,10 +146,10 @@
                         <div class="border-t-4 border-black flex row-span-1">
 
                             <div class="w-25 flex-1 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="size-16">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="size-16">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                 </svg>
 
                                 <p class="text-5xl font-semibold"> @livewire('vote-counter') </p>
@@ -155,8 +174,8 @@
                                         Stem nu
                                     </a>
                                 @elseif($status === 'bestellen')
-                                    <a href="{{ route('bestelling', ['location_id' => $location_id]) }}"
-                                        class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
+                                    <a href="{{ route('bestelling', $winning_location_id ?? 1) }}"
+                                       class="bg-teal-900 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow hover:bg-teal-800">
                                         Bestel nu
                                     </a>
 
@@ -164,6 +183,12 @@
                                     <a href="#"
                                         class="bg-gray-500 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow cursor-not-allowed opacity-50"
                                         onclick="return false;">
+                                        Nog niet beschikbaar
+                                    </a>
+                                @else
+                                    <a href="#"
+                                       class="bg-gray-500 text-white text-2xl font-bold py-4 px-12 rounded-lg shadow cursor-not-allowed opacity-50"
+                                       onclick="return false;">
                                         Nog niet beschikbaar
                                     </a>
                                 @endif

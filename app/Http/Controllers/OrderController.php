@@ -58,6 +58,7 @@ class OrderController extends Controller
                 $status = 'gesloten';
             }
         }
+
         return view('order.show', array_merge(
             compact('location', 'lunchItems', 'order'),
             [
@@ -141,13 +142,20 @@ class OrderController extends Controller
 
         $locationId = $request->input('location_id');
 
-        Order::create([
-            'location_id' => $locationId,
-            'user_id' => Auth::id(),
-            'items' => json_encode($orderData),
-        ]);
+        $existingOrder = Order::where('user_id', Auth::id())
+            ->where('location_id', $locationId)
+            ->first();
 
-        session()->forget('order');
+        if ($existingOrder) {
+            $existingOrder->items = json_encode($orderData);
+            $existingOrder->save();
+        } else {
+            Order::create([
+                'location_id' => $locationId,
+                'user_id' => Auth::id(),
+                'items' => json_encode($orderData),
+            ]);
+        }
 
         return redirect('/')->with('success', 'Bestelling succesvol opgeslagen!');
     }
