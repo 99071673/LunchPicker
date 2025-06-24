@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Lunchgetter;
 use App\Models\Order;
+use App\Models\DeadlineSetting;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class LunchgetterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $orders = Order::all();
 
         return view('lunchgetter', compact('orders'));
-
     }
 
     /**
