@@ -8,18 +8,6 @@
 
 @section('content')
 
-    @if (session('error'))
-        <div class="bg-red-100 text-red-800 px-4 py-3 rounded mb-4">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    @if (session('success'))
-        <div class="bg-green-100 text-green-800 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="w-full max-w-screen-2xl mx-auto p-4 flex flex-col gap-5">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-7">
             {{-- Huidige Bestelling --}}
