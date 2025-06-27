@@ -2,6 +2,7 @@
 
 @php use Illuminate\Support\Str; @endphp
 
+@section('title', 'Home')
 @section('pagetitle')
     Home
 @endsection

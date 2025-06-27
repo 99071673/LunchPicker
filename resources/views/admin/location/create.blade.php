@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Create')
+
 @section('content')
     <div class="w-full max-w-lg mx-auto px-4 sm:px-6 py-10 bg-white rounded-3xl shadow-lg mt-10">
         <h1 class="text-2xl font-bold mb-6 text-center">Nieuwe Locatie Aanmaken</h1>

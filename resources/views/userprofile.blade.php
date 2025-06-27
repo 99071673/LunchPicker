@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'User Profile')
+
 @section('pagetitle') User Profile @endsection
 
 @section('content')
