@@ -78,7 +78,7 @@
                                     <p class="font-bold text-lg">{{ $location->name }}</p>
 
                                     <div class="flex space-x-3 items-center">
-                                        <a href="{{ route('locations.edit', ['location' => $location->id]) }}"
+                                        <a href="{{ route('location.edit', ['location' => $location->id]) }}"
                                             class="bg-blue-500 hover:bg-blue-600 text-white text-base px-8 py-2 rounded-xl font-semibold">
                                             Edit
                                         </a>

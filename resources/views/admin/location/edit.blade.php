@@ -57,7 +57,8 @@
                             <span class="w-full sm:w-auto">{{ $item->naam }}</span>
                             <div class="flex flex-wrap gap-2 items-center justify-end">
                                 <span class="whitespace-nowrap">€{{ number_format($item->prijs, 2) }}</span>
-                                <a href="{{ route('lunchitems.edit', $item->id) }}"
+
+                                <a href="{{ route('lunchitem.edit',["location" => $location->id, "LunchItem" => $item->id ]) }}"
                                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-500 transition text-sm">
                                     Wijzigen
                                 </a>
