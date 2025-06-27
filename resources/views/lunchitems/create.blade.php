@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Nieuw Lunchitem')
+
 @section('pagetitle')
     Nieuw Lunchitem
 @endsection
@@ -17,7 +19,7 @@
         <form method="POST" action="{{ route('lunchitems.store') }}" class="space-y-5">
             @csrf
 
-            <input type="hidden" name="location_id" value="{{ $location->id }}">
+                <input type="hidden" name="location_id" value="{{ $location->id }}">
 
             <div>
                 <label for="naam" class="block text-xl font-bold mb-1 text-gray-800">Naam</label>
