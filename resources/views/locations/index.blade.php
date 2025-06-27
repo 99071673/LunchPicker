@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', 'Locaties')
 @section('pagetitle')
     <div class="relative inline-block">
         <p class="text-lg font-semibold">Kies een locatie om te eten</p>

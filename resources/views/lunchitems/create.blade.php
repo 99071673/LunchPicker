@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Nieuw Lunchitem')
+
 @section('pagetitle')
     Nieuw Lunchitem
 @endsection
