@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Admin')
+
 @section('pagetitle') Admin @endsection
 
 @section('content')
@@ -39,7 +41,7 @@
                 </form>
 
 
-                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col">
+                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col max-h-[400px]">
                     <div class="border-b-4 border-black mb-4">
                         <p class="text-4xl font-bold flex justify-center">Gebruikers</p>
                     </div>
@@ -50,8 +52,6 @@
                             <ul class="space-y-2">
                                 @foreach($users as $user)
                                     <li class="p-2 border-b">
-                                        {{-- Hier moeten we nog even naar gaan kijken of we nou email of naam (of allebei) willen
-                                        gaan tonen --}}
                                         <p class="font-bold">{{ $user->name }}</p>
                                         <p class="text-sm text-gray-600">{{ $user->email }}</p>
                                     </li>
@@ -78,7 +78,7 @@
                                     <p class="font-bold text-lg">{{ $location->name }}</p>
 
                                     <div class="flex space-x-3 items-center">
-                                        <a href="{{ route('locations.edit', ['location' => $location->id]) }}"
+                                        <a href="{{ route('location.edit', ['location' => $location->id]) }}"
                                             class="bg-blue-500 hover:bg-blue-600 text-white text-base px-8 py-2 rounded-xl font-semibold">
                                             Edit
                                         </a>
@@ -110,38 +110,46 @@
 
 
 
-                    <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
-                        <div class="border-b-4 border-black mb-4">
-                            <p class="text-4xl font-bold flex justify-center">Overig</p>
-                        </div>
+            <div class="bg-white border rounded-lg shadow p-4 h-[650px] w-full flex flex-col">
+                <div class="border-b-4 border-black mb-4">
+                    <p class="text-4xl font-bold flex justify-center">Overig</p>
+                </div>
 
-                        <div class="flex-1 overflow-y-auto space-y-4">
-                            <form method="POST" action="{{ route('admin.setStatus') }}" class="space-y-2">
-                                @csrf
-                                <label class="block text-lg">Debug Status Override</label>
-                                <select name="status" class="w-full border px-4 py-2 rounded-lg">
-                                    <option value="wachten">wachten</option>
-                                    <option value="locatie-stemmen">locatie-stemmen</option>
-                                    <option value="bestellen">bestellen</option>
-                                    <option value="gesloten">gesloten</option>
-                                </select>
-                                <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
-                                    Set Debug Status
-                                </button>
-                            </form>
+                <div class="flex-1 overflow-y-auto space-y-4">
+                    <form method="POST" action="{{ route('admin.setStatus') }}" class="space-y-2">
+                        @csrf
+                        <label class="block text-lg">Debug Status Override</label>
+                        <select name="status" class="w-full border px-4 py-2 rounded-lg">
+                            <option value="wachten">wachten</option>
+                            <option value="locatie-stemmen">locatie-stemmen</option>
+                            <option value="bestellen">bestellen</option>
+                            <option value="gesloten">gesloten</option>
+                        </select>
+                        <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                            Set Debug Status
+                        </button>
+                    </form>
 
-                            <form method="POST" action="{{ route('admin.clearStatus') }}">
-                                @csrf
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">
-                                    Clear Debug Status
-                                </button>
-                            </form>
+                    <form method="POST" action="{{ route('admin.clearStatus') }}">
+                        @csrf
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                            Clear Debug Status
+                        </button>
+                    </form>
 
-                            @if(session()->has('debug_status'))
-                                <p class="text-green-600 font-bold">Current debug status: {{ session('debug_status') }}</p>
-                            @endif
-                        </div>
-                    </div>
+                    @if(session()->has('debug_status'))
+                        <p class="text-green-600 font-bold">Current debug status: {{ session('debug_status') }}</p>
+                    @endif
+
+                    <form method="POST" action="{{ route('admin.clearOrdersAndVotes') }}"
+                        onsubmit="return confirm('Weet je zeker dat je alle stemmen en bestellingen wilt verwijderen?');">
+                        @csrf
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                            Verwijder alle stemmen en bestellingen
+                        </button>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>

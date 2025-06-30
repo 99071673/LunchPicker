@@ -18,7 +18,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/store', [OrderController::class, 'store'])->name('order.save');
     Route::get('/lunchitems/create', [LunchItemController::class, 'create'])->name('lunchitems.create');
     Route::post('/lunchitems', [LunchItemController::class, 'store'])->name('lunchitems.store');
-    Route::get('/lunchitems/edit/{lunchitem_id}', [LunchItemController::class, 'edit'])->name('lunchitems.edit')->middleware('can:access-admin');
     Route::delete('/lunchitems/{lunchitem_id}', [LunchItemController::class, 'destroy'])->name('lunchitems.destroy')->middleware('can:access-admin');
     Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
     Route::post('/order/update', [OrderController::class, 'update'])->name('order.update');
@@ -43,15 +42,25 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/locations/{location}', [LocationController::class, 'update'])
             ->name('locations.update')
             ->middleware('can:access-admin');
+        Route::get('/lunchitems/edit/{location}/{LunchItem}', [LunchItemController::class, 'edit'])
+            ->name('lunchitem.edit')
+            ->middleware('can:access-admin');
+        Route::put('/lunchitems/update/{location}/{lunchItem}', [LunchItemController::class, 'update'])
+            ->name('lunchitem.update')
+            ->middleware('can:access-admin');
         Route::delete('/admin/location/{location}', [LocationController::class, 'destroy'])
             ->name('location.destroy')
             ->middleware('can:access-admin');
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])
             ->name('admin.updateDeadlines')
             ->middleware('can:access-admin');
+        Route::delete('admin/lunchitems/{lunchitem_id}', [LunchItemController::class, 'destroy'])
+            ->name('lunchitems.destroy')
+            ->middleware('can:access-admin');
         Route::post('admin/deadlines', [AdminController::class, 'updateDeadlines'])->name('admin.updateDeadlines');
         Route::post('/admin/set-status', [AdminController::class, 'setStatus'])->name('admin.setStatus');
         Route::post('/admin/clear-status', [AdminController::class, 'clearStatus'])->name('admin.clearStatus');
+        Route::post('/admin/clear', [AdminController::class, 'clearOrdersAndVotes'])->name('admin.clearOrdersAndVotes');
     });
 
     Route::view('dashboard', 'dashboard')->middleware('verified')->name('dashboard');
@@ -62,4 +71,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

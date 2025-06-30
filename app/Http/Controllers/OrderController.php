@@ -26,6 +26,17 @@ class OrderController extends Controller
         $lunchItems = $query->get();
 
         $order = session('order', []);
+        foreach ($order as $key => $sessieItem) {
+            $lunchItem = LunchItem::find($sessieItem['id']);
+            if ($lunchItem) {
+                $order[$key]['naam'] = $lunchItem->naam;
+                $order[$key]['prijs'] = $lunchItem->prijs;
+            } else {
+                unset($order[$key]);
+            }
+        }
+        $order = array_values($order);
+        session()->put('order', $order);
 
         $timezone = 'Europe/Amsterdam';
         $now = Carbon::now($timezone);
@@ -88,8 +99,6 @@ class OrderController extends Controller
         if (!$bestaat) {
             $order[] = [
                 'id' => $item->id,
-                'naam' => $item->naam,
-                'prijs' => $item->prijs,
                 'aantal' => 1,
             ];
         }

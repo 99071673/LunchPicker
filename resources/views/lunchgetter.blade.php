@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Lunchgetter')
+
 @section('pagetitle')
     @php
         use App\Models\Order;
