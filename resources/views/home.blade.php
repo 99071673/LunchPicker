@@ -159,12 +159,11 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Meer schulden hier indien nodig --}}
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

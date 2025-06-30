@@ -1,46 +1,38 @@
 @extends('layouts.master')
 
-@section('title', 'Nieuw Lunchitem')
-
 @section('pagetitle')
-    Nieuw Lunchitem
+    Edit
 @endsection
 
 @section('content')
     <div class="max-w-lg mx-auto mt-10 bg-white p-6 rounded-xl shadow">
-        <h2 class="text-2xl font-bold mb-5 text-gray-800 text-center">Voeg een nieuw lunchitem toe voor {{ $location->name }}</h2>
+        <h2 class="text-2xl font-bold mb-5 text-gray-800">Bewerk Lunch Item</h2>
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-xl">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('lunchitems.store') }}" class="space-y-5">
+        <form action="{{ route('lunchitem.update', ['location' => $location->id, 'lunchItem' => $lunchItem->id]) }}"
+              method="POST" class="space-y-5">
             @csrf
-
-                <input type="hidden" name="location_id" value="{{ $location->id }}">
+            @method('PUT')
 
             <div>
                 <label for="naam" class="block text-xl font-bold mb-1 text-gray-800">Naam</label>
-                <input type="text" name="naam" id="naam"
+                <input type="text" id="naam" name="naam"
+                       value="{{ old('naam', $lunchItem->naam) }}"
                        class="w-full px-4 py-2 rounded-xl border border-gray-400 focus:ring-2 focus:ring-blue-400"
-                       placeholder="Bijv. Broodje Gezond"
-                       required>
-                @error('naam')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
+                       placeholder="Bijv. Broodje Tonijn">
             </div>
 
             <div>
                 <label for="prijs" class="block text-xl font-bold mb-1 text-gray-800">Prijs (€)</label>
-                <input type="number" step="0.01" min="0" name="prijs" id="prijs"
+                <input type="number" step="0.01" min="0" id="prijs" name="prijs"
+                       value="{{ old('prijs', $lunchItem->prijs) }}"
                        class="w-full px-4 py-2 rounded-xl border border-gray-400 focus:ring-2 focus:ring-blue-400"
-                       placeholder="Bijv. 3.95"
-                       required>
-                @error('prijs')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
+                       placeholder="Bijv. 3.95">
             </div>
 
             <div class="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
@@ -50,7 +42,7 @@
                 </a>
                 <button type="submit"
                         class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-xl font-semibold">
-                    Toevoegen
+                    Opslaan
                 </button>
             </div>
         </form>

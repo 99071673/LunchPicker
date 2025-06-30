@@ -52,10 +52,10 @@
                     @endforeach
                 </ul>
 
-                <a href="{{ route('lunchitems.create', ['location_id' => $location->id]) }}"
-                   class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all mt-4 self-end text-sm md:text-base">
-                    Voeg nieuw item toe
-                </a>
+{{--                <a href="{{ route('lunchitems.create', ['location_id' => $location->id]) }}"--}}
+{{--                   class="bg-teal-900 text-white py-2 px-6 rounded-full hover:bg-teal-800 transition-all mt-4 self-end text-sm md:text-base">--}}
+{{--                    Voeg nieuw item toe--}}
+{{--                </a>--}}
             </div>
 
             {{-- Bestellingblok --}}
