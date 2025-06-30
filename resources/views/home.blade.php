@@ -33,7 +33,7 @@
                                     <span class="text-lg md:text-2xl font-semibold">{{ $item['aantal'] }}<span class="text-sm align-bottom">x</span></span>
                                     <span class="text-lg md:text-2xl font-semibold ml-2">{{ $item['naam'] }}</span>
                                     <span class="text-lg md:text-2xl font-semibold ml-auto">€
-                                        {{ number_format($itemTotaal, 2, ',', '.') }},-</span>
+                                        {{ number_format($itemTotaal, 2, ',', '.') }}</span>
                                 </div>
                             @endforeach
                         @else
@@ -43,7 +43,7 @@
 
                     <div class="border-t-4 border-black pt-4 flex items-center flex-wrap justify-between gap-4">
                         <p class="text-xl md:text-2xl font-semibold">
-                            Totaal: € {{ isset($totaal) ? number_format($totaal, 2, ',', '.') : '0,00' }},-
+                            Totaal: € {{ isset($totaal) ? number_format($totaal, 2, ',', '.') : '0,00' }}
                         </p>
                         @if($order && $order->items)
                             <a href="{{ route('bestelling', ['location_id' => $location_id]) }}"
