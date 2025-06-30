@@ -41,7 +41,7 @@
                 </form>
 
 
-                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col">
+                <div class="bg-white border rounded-lg shadow p-4 flex-1 flex flex-col max-h-[400px]">
                     <div class="border-b-4 border-black mb-4">
                         <p class="text-4xl font-bold flex justify-center">Gebruikers</p>
                     </div>
@@ -52,8 +52,6 @@
                             <ul class="space-y-2">
                                 @foreach($users as $user)
                                     <li class="p-2 border-b">
-                                        {{-- Hier moeten we nog even naar gaan kijken of we nou email of naam (of allebei) willen
-                                        gaan tonen --}}
                                         <p class="font-bold">{{ $user->name }}</p>
                                         <p class="text-sm text-gray-600">{{ $user->email }}</p>
                                     </li>
