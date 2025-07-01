@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-@section('title', 'Lunchgetter')
-
 @section('pagetitle')
     @php
         use App\Models\Order;
@@ -11,7 +9,7 @@
         $victim = \DB::table('lunchgetter')->latest('id')->value('name_victim');
         $randomUser = 'Geen slachtoffer';
 
-        if (now()->greaterThan($deadline) && !$victim && $orders->isNotEmpty()) {
+        if (now()->greaterThanOrEqualTo($deadline) && !$victim && $orders->isNotEmpty()) {
             $randomOrder = $orders->random();
             $randomUser = $randomOrder->user->name ?? 'Geen slachtoffer';
             \DB::table('lunchgetter')->insert([
@@ -24,7 +22,7 @@
             $randomUser = $victim;
         }
     @endphp
-    <span class="font-semibold">De slachtoffer om de bestelling op te halen is: </span> {{ $randomUser }}
+    <span class="font-semibold">Slachtoffer: </span> {{ $randomUser }}
 @endsection
 
 @section('content')
@@ -59,10 +57,18 @@
                                         <li class="border-b pb-1">
                                             <div><span class="font-medium">Naam:</span> {{ isset($item['naam']) ? $item['naam'] : 'Naam niet bekend' }}</div>
                                             <div><span class="font-medium">Aantal:</span> {{ isset($item['aantal']) ? $item['aantal'] : 'Aantal niet Onbekend' }}</div>
-                                            <div><span class="font-medium">Prijs: €</span> {{ isset($item['prijs']) ? $item['prijs'] : 'Prijs niet Onbekend' }}</div>
+                                            <div>
+                                                <span class="font-medium">Prijs: €</span>
+                                                @php
+                                                    $aantal = isset($item['aantal']) ? (float)$item['aantal'] : 0;
+                                                    $prijs = isset($item['prijs']) ? (float)$item['prijs'] : 0;
+                                                    $subtotaal = $aantal * $prijs;
+                                                @endphp
+                                                {{ $aantal }} x {{ $prijs }} = {{ number_format($subtotaal, 2, ',', '.') }}
+                                            </div>
                                         </li>
                                         @php
-                                            $totaalPrijsOrder += isset($item['prijs']) ? (float)$item['prijs'] : 0;
+                                            $totaalPrijsOrder += $subtotaal;
                                         @endphp
                                     @endforeach
                                 </ul>
